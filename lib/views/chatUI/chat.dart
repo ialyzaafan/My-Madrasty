@@ -194,26 +194,24 @@ class _ChatScreenState extends State<ChatScreen> {
               )
             ])),
       ),
-      body: containerPadding(
-        Column(
-          children: [
-            Expanded(
-              child: ListView.builder(
-                padding: EdgeInsets.all(20),
-                reverse: true,
-                itemCount: chats.length,
-                itemBuilder: (BuildContext context, int index) {
-                  final Message message = chats[index];
-                  final bool isMe = message.sender.id == spiderMan.id;
-                  final isSameUser = prevUserId == message.sender.id;
-                  prevUserId = message.sender.id;
-                  return _chatBubble(message, isMe, isSameUser);
-                },
-              ),
+      body: Column(
+        children: [
+          Expanded(
+            child: ListView.builder(
+              padding: EdgeInsets.all(20),
+              reverse: true,
+              itemCount: chats.length,
+              itemBuilder: (BuildContext context, int index) {
+                final Message message = chats[index];
+                final bool isMe = message.sender.id == spiderMan.id;
+                final isSameUser = prevUserId == message.sender.id;
+                prevUserId = message.sender.id;
+                return _chatBubble(message, isMe, isSameUser);
+              },
             ),
-            _sendMessageArea()
-          ],
-        ),
+          ),
+          _sendMessageArea()
+        ],
       ),
     );
   }

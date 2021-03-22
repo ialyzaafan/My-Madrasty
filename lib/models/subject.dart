@@ -44,123 +44,15 @@ class Classworks extends Subject {
   String descriptions;
   bool isRead;
   String pdfFile;
+  bool selected;
 
   Classworks(
-      this.pdfFile,
       this.iD,
       this.date,
       this.descriptions,
       this.isRead,
-      int id,
-      String imgUrl,
-      String subjectName,
-      String start,
-      String end,
-      int maxHr,
-      int minHr,
-      bool isExtra,
-      User teacher,
-      String note,
-      SubjectType type)
-      : super(
-            id: id,
-            imgUrl: imgUrl,
-            title: subjectName,
-            start: start,
-            end: end,
-            maxHr: maxHr,
-            minHr: minHr,
-            teacher: teacher,
-            note: note,
-            type: type);
-}
-
-class Homework extends Subject {
-  int iD;
-  String descriptions;
-  bool isRead;
-  DateTime date;
-  String pdfFile;
-  Homework(
-      this.iD,
-      this.date,
-      this.descriptions,
       this.pdfFile,
-      this.isRead,
-      int id,
-      String imgUrl,
-      String subjectName,
-      String start,
-      String end,
-      int maxHr,
-      int minHr,
-      bool isExtra,
-      User teacher,
-      String note,
-      SubjectType type)
-      : super(
-            id: id,
-            imgUrl: imgUrl,
-            title: subjectName,
-            start: start,
-            end: end,
-            maxHr: maxHr,
-            minHr: minHr,
-            teacher: teacher,
-            note: note,
-            type: type);
-}
-
-class Extraclasses extends Subject {
-  int iD;
-  String descriptions;
-  bool isRead;
-  DateTime date;
-  String pdfFile;
-
-  Extraclasses(
-      this.iD,
-      this.date,
-      this.descriptions,
-      this.pdfFile,
-      this.isRead,
-      int id,
-      String imgUrl,
-      String subjectName,
-      String start,
-      String end,
-      int maxHr,
-      int minHr,
-      bool isExtra,
-      User teacher,
-      String note,
-      SubjectType type)
-      : super(
-            id: id,
-            imgUrl: imgUrl,
-            title: subjectName,
-            start: start,
-            end: end,
-            maxHr: maxHr,
-            minHr: minHr,
-            teacher: teacher,
-            note: note,
-            type: type);
-}
-
-class Projects extends Subject {
-  int iD;
-  String descriptions;
-  bool isRead;
-  DateTime date;
-  String pdfFile;
-
-  Projects(
-      this.iD,
-      this.date,
-      this.descriptions,
-      this.pdfFile,
-      this.isRead,
+      this.selected,
       int id,
       String imgUrl,
       String subjectName,
@@ -215,11 +107,12 @@ final Subject breakClass = new Subject(
     type: SubjectType.Break);
 
 final Classworks arabicClassWork = Classworks(
-    null,
     1,
     DateTime.utc(2020, 12, 24),
     'Lorem Ipsum is simply dummy text of the printing and typesetting industry',
     false,
+    null,
+    true,
     1,
     'assets/icons/projects.png',
     'Arabic',
@@ -233,10 +126,11 @@ final Classworks arabicClassWork = Classworks(
     SubjectType.Classwork);
 
 final Classworks englishClassWork = Classworks(
-    null,
     30,
     DateTime.utc(2020, 12, 24),
     'Lorem Ipsum is simply dummy text of the printing and typesetting industry',
+    false,
+    null,
     false,
     2,
     'assets/icons/projects.png',
@@ -254,10 +148,11 @@ final List<Classworks> classworks = [arabicClassWork, englishClassWork];
 final List<Classworks> todayClassworks =
     classworks.where((d) => d.date == DateTime.utc(2020, 12, 24)).toList();
 
-final Homework arabicHW = new Homework(
+final Classworks arabicHW = new Classworks(
     1,
     DateTime.utc(2020, 12, 24),
     'Lorem Ipsum is simply dummy text of the printing and typesetting industry',
+    false,
     'Superman Secret wepon',
     false,
     1,
@@ -272,10 +167,11 @@ final Homework arabicHW = new Homework(
     '',
     SubjectType.Homwork);
 
-final Extraclasses arabicExtra = new Extraclasses(
+final Classworks arabicExtra = new Classworks(
     1,
     DateTime.utc(2020, 12, 24),
     'Lorem Ipsum is simply dummy text of the printing and typesetting industry',
+    false,
     'Superman Secret wepon',
     false,
     1,
@@ -290,10 +186,11 @@ final Extraclasses arabicExtra = new Extraclasses(
     '',
     SubjectType.Extra);
 
-final Projects arabicProject = new Projects(
+final Classworks arabicProject = new Classworks(
     1,
     DateTime.utc(2020, 12, 24),
     'Lorem Ipsum is simply dummy text of the printing and typesetting industry',
+    false,
     'Superman Secret wepon',
     false,
     1,
@@ -307,14 +204,14 @@ final Projects arabicProject = new Projects(
     zod,
     '',
     SubjectType.Projects);
-final List<Homework> homeworks = [arabicHW];
-final List<Homework> todayHomeworks =
+final List<Classworks> homeworks = [arabicHW];
+final List<Classworks> todayHomeworks =
     homeworks.where((d) => d.date == DateTime.utc(2020, 12, 24)).toList();
-final List<Projects> projects = [arabicProject];
-final List<Projects> todayProjects =
+final List<Classworks> projects = [arabicProject];
+final List<Classworks> todayProjects =
     projects.where((d) => d.date == DateTime.utc(2020, 12, 24)).toList();
-final List<Extraclasses> extras = [arabicExtra];
-final List<Extraclasses> todayExtra =
+final List<Classworks> extras = [arabicExtra];
+final List<Classworks> todayExtra =
     extras.where((d) => d.date == DateTime.utc(2020, 12, 24)).toList();
 
 class Grade {
@@ -333,4 +230,11 @@ List<Grade> grades = [gradeOne, gradeTwo, gradeThree];
 List<Map> userExamed = [
   {'User': spiderMan, 'Exam': arabicExam},
   {'User': superMan, 'Exam': arabicExam},
+];
+List<Classworks> classworkss = [
+  arabicClassWork,
+  englishClassWork,
+  arabicHW,
+  arabicProject,
+  arabicExtra
 ];

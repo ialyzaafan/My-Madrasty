@@ -74,15 +74,8 @@ class _ChatsHomeState extends State<ChatsHome> {
       ),
       body: chats.length != 0
           ? containerPadding(
-              Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(12.0),
-                      topRight: Radius.circular(12.0)),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: ListView.builder(
+              roundedCard(
+                  ListView.builder(
                       itemCount: chats.length,
                       itemBuilder: (BuildContext context, int index) {
                         final Message chat = chats[index];
@@ -102,7 +95,6 @@ class _ChatsHomeState extends State<ChatsHome> {
                             child: Row(
                               children: [
                                 Container(
-                                  padding: EdgeInsets.all(2),
                                   child: CircleAvatar(
                                       backgroundColor: secondryColor,
                                       child: chat.sender.imgUrl != null
@@ -111,7 +103,7 @@ class _ChatsHomeState extends State<ChatsHome> {
                                               Icons.person,
                                               color: mainColor,
                                             ),
-                                      radius: 40.0,
+                                      radius: 30.0,
                                       backgroundImage:
                                           chat.sender.imgUrl != null
                                               ? AssetImage(chat.sender.imgUrl)
@@ -141,7 +133,7 @@ class _ChatsHomeState extends State<ChatsHome> {
                                 Container(
                                   width:
                                       MediaQuery.of(context).size.width * 0.60,
-                                  padding: EdgeInsets.all(20.0),
+                                  padding: EdgeInsets.all(10.0),
                                   child: Column(
                                     children: [
                                       Row(
@@ -150,7 +142,6 @@ class _ChatsHomeState extends State<ChatsHome> {
                                         children: [
                                           Container(
                                             alignment: Alignment.topLeft,
-                                            padding: EdgeInsets.only(top: 10.0),
                                             child: Text(
                                               'Student - Class 3A',
                                               textAlign: TextAlign.start,
@@ -177,12 +168,6 @@ class _ChatsHomeState extends State<ChatsHome> {
                                             chat.sender.name,
                                             style: smallTitleStyle,
                                           ),
-                                          CircleAvatar(
-                                            radius: 5,
-                                            backgroundColor: chat.isRead
-                                                ? Colors.white
-                                                : mainColor,
-                                          )
                                         ],
                                       ),
                                       Container(
@@ -207,8 +192,8 @@ class _ChatsHomeState extends State<ChatsHome> {
                           ),
                         );
                       }),
-                ),
-              ),
+                  Colors.white,
+                  0.0),
             )
           : _buildNoMessages(context),
     );

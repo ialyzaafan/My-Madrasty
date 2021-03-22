@@ -3,15 +3,30 @@ import 'package:madrasty/models/user.dart';
 class Book {
   int id;
   String name;
-  int borrowedDate;
-  int returnDate;
+  DateTime borrowedDate;
+  DateTime returnDate;
   bool status;
   Book(this.id, this.name, this.borrowedDate, this.returnDate, this.status);
 }
 
-final Book avengers = new Book(1, 'End Game', 30, 20, false);
-final Book avengers2 = new Book(1, 'Infinty War', 6, 50, false);
-final Book avengers3 = new Book(1, 'Iron Man', 2, 30, false);
+final Book avengers = new Book(
+    1,
+    'End Game',
+    DateTime(DateTime.now().year, 02, 04),
+    DateTime(DateTime.now().year, 02, 14),
+    false);
+final Book avengers2 = new Book(
+    1,
+    'Infinty War',
+    DateTime(DateTime.now().year, 02, 04),
+    DateTime(DateTime.now().year, 02, 14),
+    false);
+final Book avengers3 = new Book(
+    1,
+    'Iron Man',
+    DateTime(DateTime.now().year, 02, 04),
+    DateTime(DateTime.now().year, 02, 14),
+    false);
 
 class Library {
   int id;

@@ -66,14 +66,6 @@ class BusView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: mainColor,
-        onPressed: () {},
-        child: Icon(
-          Icons.call,
-          color: Colors.white,
-        ),
-      ),
       backgroundColor: backgroundColor,
       appBar: AppBar(
         iconTheme: IconThemeData(color: mainColor),
@@ -90,50 +82,63 @@ class BusView extends StatelessWidget {
           padding: EdgeInsets.all(20),
           child: Column(
             children: [
-              Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12.0),
-                ),
-                child: ListTile(
-                  contentPadding:
-                      EdgeInsets.only(top: 20, bottom: 20, left: 8, right: 8),
-                  leading: CircleAvatar(
-                    radius: 30,
-                    backgroundColor: backgroundColor,
-                    child: Image.asset('assets/icons/transport.png'),
+              Stack(
+                children: [
+                  Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12.0),
+                    ),
+                    child: ListTile(
+                      contentPadding: EdgeInsets.only(
+                          top: 20, bottom: 20, left: 8, right: 8),
+                      leading: CircleAvatar(
+                        radius: 30,
+                        backgroundColor: backgroundColor,
+                        child: Image.asset('assets/icons/transport.png'),
+                      ),
+                      title: Row(
+                        children: [
+                          Text(
+                            bus.id,
+                            style: smallTitleStyle,
+                          ),
+                          SizedBox(
+                            width: 10,
+                            child: Divider(),
+                          ),
+                          Text(
+                            bus.route.name,
+                            style: smallTitleStyle,
+                          ),
+                          SizedBox(
+                            width: 2,
+                          ),
+                        ],
+                      ),
+                      subtitle: Row(
+                        children: [
+                          CircleAvatar(
+                            radius: 5,
+                            backgroundColor: mainColor,
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Text(bus.arrived ? 'On Trip' : 'Approaching')
+                        ],
+                      ),
+                    ),
                   ),
-                  title: Row(
-                    children: [
-                      Text(
-                        bus.id,
-                        style: smallTitleStyle,
-                      ),
-                      SizedBox(
-                        width: 10,
-                        child: Divider(),
-                      ),
-                      Text(
-                        bus.route.name,
-                        style: smallTitleStyle,
-                      ),
-                      SizedBox(
-                        width: 2,
-                      ),
-                    ],
-                  ),
-                  subtitle: Row(
-                    children: [
-                      CircleAvatar(
-                        radius: 5,
-                        backgroundColor: mainColor,
-                      ),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Text(bus.arrived ? 'On Trip' : 'Approaching')
-                    ],
-                  ),
-                ),
+                  Positioned(
+                    right: 20,
+                    top: 10,
+                    bottom: 10,
+                    child: CircleAvatar(
+                      child: Icon(Icons.call, color: Colors.white),
+                      backgroundColor: mainColor,
+                    ),
+                  )
+                ],
               ),
               Card(
                 shape: RoundedRectangleBorder(

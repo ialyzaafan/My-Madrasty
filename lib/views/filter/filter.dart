@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:madrasty/models/subject.dart';
 import 'package:madrasty/models/user.dart';
 import 'package:madrasty/style/style.dart';
 import 'package:madrasty/views/child/classWorks.dart';
@@ -6,19 +7,16 @@ import 'package:madrasty/views/general/General.dart';
 
 class FilterLists extends StatefulWidget {
   final String title;
-  final List<dynamic> list;
   final String filterdListTitle;
   final User user;
-  FilterLists(this.list, this.title, this.filterdListTitle, this.user);
+  FilterLists(this.title, this.filterdListTitle, this.user);
   @override
   _FilterListsState createState() => _FilterListsState();
 }
 
 class _FilterListsState extends State<FilterLists> {
   DateTime _selectedDate = DateTime.now();
-  String _selectedFilter;
-  List filteredList;
-
+  List filteredList = [];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,33 +41,9 @@ class _FilterListsState extends State<FilterLists> {
             SizedBox(
               height: 10,
             ),
-            Wrap(
-              children: widget.list
-                  .map((e) => InkWell(
-                        onTap: () {
-                          setState(() {
-                            _selectedFilter = e.title;
-                          });
-                        },
-                        child: Card(
-                          child: Padding(
-                            padding: const EdgeInsets.all(12.0),
-                            child: Text(
-                              e.title,
-                              style: _selectedFilter == e.title
-                                  ? whiteSmallTitleStyle
-                                  : smallTitleStyle,
-                            ),
-                          ),
-                          elevation: 0,
-                          color: _selectedFilter == e.title
-                              ? mainColor
-                              : secondryColor,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12)),
-                        ),
-                      ))
-                  .toList(),
+            Container(
+              height: 50,
+              child: _buildChips(classworkss),
             ),
             SizedBox(
               height: 20,
@@ -116,23 +90,15 @@ class _FilterListsState extends State<FilterLists> {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12)),
                 elevation: 0,
-                onPressed: _selectedFilter != null
-                    ? () {
-                        setState(() {
-                          filteredList = widget.list
-                              .where((e) =>
-                                  e.title == _selectedFilter ||
-                                  e.date == _selectedDate)
-                              .toList();
-                        });
-                        Navigator.pop(context);
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (_) => ClassworksList(
-                                    filteredList, widget.title, widget.user)));
-                      }
-                    : null,
+                onPressed: () {
+                  Navigator.pop(context);
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ClassworksList(
+                            classworkss, 'Classworks', widget.user)),
+                  );
+                },
                 color: mainColor,
               ),
             )
@@ -159,5 +125,34 @@ class _FilterListsState extends State<FilterLists> {
       setState(() {
         _selectedDate = picked;
       });
+  }
+
+  Widget _buildChips(options) {
+    return ListView.builder(
+      itemCount: options.length,
+      // This next line does the trick.
+      scrollDirection: Axis.horizontal,
+      itemBuilder: (BuildContext context, int index) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 4),
+          child: FilterChip(
+            checkmarkColor: Colors.white,
+            selected: options[index].selected,
+            label: Text(options[index].title,
+                style: TextStyle(color: Colors.white)),
+            elevation: 1,
+            pressElevation: 5,
+            shadowColor: Colors.teal,
+            backgroundColor: disapbledColor,
+            selectedColor: mainColor,
+            onSelected: (bool selected) {
+              setState(() {
+                options[index].selected = selected;
+              });
+            },
+          ),
+        );
+      },
+    );
   }
 }

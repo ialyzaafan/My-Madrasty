@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:madrasty/assets/my_flutter_app_icons.dart';
 import 'package:madrasty/models/user.dart';
 import 'package:madrasty/style/style.dart';
 import 'package:madrasty/views/general/General.dart';
@@ -80,7 +81,10 @@ class _MyProfileState extends State<MyProfile> {
                             color: mainColor,
                             borderRadius:
                                 BorderRadius.all(Radius.circular(12.0))),
-                        child: Icon(Icons.switch_account)),
+                        child: Icon(
+                          Icons.swap_horizontal_circle_sharp,
+                          color: Colors.white,
+                        )),
                   ),
                 )
               : Container()
@@ -159,7 +163,7 @@ class _MyProfileState extends State<MyProfile> {
                           style: backgroundTextStyle,
                         ),
                         leading: Icon(
-                          Icons.mail_outline,
+                          MyFlutterApp.outline,
                           color: mainColor,
                         )),
                     ListTile(
@@ -169,7 +173,7 @@ class _MyProfileState extends State<MyProfile> {
                           style: backgroundTextStyle,
                         ),
                         leading: Icon(
-                          Icons.phone_outlined,
+                          MyFlutterApp.b126509,
                           color: mainColor,
                         )),
                     ListTile(
@@ -202,7 +206,7 @@ class _MyProfileState extends State<MyProfile> {
                           style: backgroundTextStyle,
                         ),
                         leading: Icon(
-                          Icons.mail_outline,
+                          Icons.person_outline_outlined,
                           color: mainColor,
                         )),
                     widget.user.type == Type.Child

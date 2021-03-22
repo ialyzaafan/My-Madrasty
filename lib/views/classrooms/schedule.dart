@@ -6,7 +6,7 @@ import 'package:madrasty/style/style.dart';
 import 'package:intl/intl.dart';
 import 'package:madrasty/views/general/General.dart';
 
-class Schedule extends StatefulWidget {
+/*class Schedule extends StatefulWidget {
   final User user;
   final Classroom classroom;
   Schedule(this.classroom, this.user);
@@ -263,3 +263,4 @@ class _ScheduleState extends State<Schedule> {
     );
   }
 }
+*/

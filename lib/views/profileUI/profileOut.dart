@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:madrasty/models/calenderClass.dart';
 import 'package:madrasty/models/classroom.dart';
+import 'package:madrasty/models/library.dart';
 
 import 'package:madrasty/models/user.dart';
 import 'package:madrasty/style/style.dart';
+import 'package:madrasty/views/Library/library.dart';
 import 'package:madrasty/views/attendence/attendenceVIew.dart';
 
 import 'package:madrasty/views/child/classWorks.dart';
 import 'package:madrasty/views/classrooms/schedule.dart';
 import 'package:madrasty/views/general/General.dart';
 import 'package:madrasty/views/general/listOfParentWidgets.dart';
+import 'package:madrasty/views/teacher/teacherCalender.dart';
 
 import 'myAcc.dart';
 
@@ -88,11 +92,11 @@ class ProfileChild extends StatelessWidget {
                               ClassworksList([], 'Extra classes', user),
                               context),
                           homeContainers('assets/icons/library.png', 'Library',
-                              Container(), context),
+                              LibraryView(schoolLibrary), context),
                           homeContainers(
                               'assets/icons/schedule.png',
                               'My Schedule',
-                              Schedule(spiderMan.classroom, user),
+                              TeacherCalender(calender1),
                               context),
                           homeContainers('assets/icons/exams.png', 'Exams',
                               ClassworksList([], 'Exams', user), context),

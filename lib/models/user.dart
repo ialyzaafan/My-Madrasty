@@ -171,9 +171,7 @@ class Child extends User {
   List<Attendance> attendances;
   List<Book> booksBorrowed;
   List<Classworks> classworks;
-  List<Homework> homeworks;
-  List<Projects> projects;
-  List<Extraclasses> extraClasses;
+
   List<InstallmentClass> installments;
   List<Exam> exams;
   Child(
@@ -181,9 +179,6 @@ class Child extends User {
       this.attendances,
       this.booksBorrowed,
       this.classworks,
-      this.homeworks,
-      this.projects,
-      this.extraClasses,
       this.installments,
       this.exams,
       int id,
@@ -294,9 +289,6 @@ final Child spiderMan = Child(
     [],
     [],
     [],
-    [],
-    [],
-    [],
     1,
     'Spider Man',
     'assets/avatars/spiderman.png',
@@ -313,10 +305,7 @@ final Child superMan = Child(
         'Building 5 floor 2'),
     [jan202021, Attendance(70, DateTime.now(), true)],
     [avengers, avengers2],
-    [arabicClassWork],
-    [arabicHW],
-    [arabicProject],
-    [arabicExtra],
+    [arabicClassWork, englishClassWork, arabicHW, arabicProject, arabicExtra],
     [],
     [arabicExam],
     2,

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:madrasty/assets/my_flutter_app_icons.dart';
+import 'package:madrasty/models/calenderClass.dart';
 import 'package:madrasty/models/classroom.dart';
 import 'package:madrasty/models/installmentClass.dart';
 import 'package:madrasty/models/subject.dart';
@@ -12,6 +14,7 @@ import 'package:madrasty/views/general/General.dart';
 import 'package:madrasty/views/notifications/HomeNotfications.dart';
 import 'package:madrasty/views/parent/installment/installment.dart';
 import 'package:madrasty/views/profileUI/myAcc.dart';
+import 'package:madrasty/views/teacher/teacherCalender.dart';
 
 class Home extends StatefulWidget {
   final Parent parent;
@@ -51,15 +54,16 @@ class _HomeState extends State<Home> {
         items: [
           BottomNavigationBarItem(
             label: 'Home',
-            icon: new Icon(Icons.home),
+            icon: new Icon(MyFlutterApp.browser),
           ),
           BottomNavigationBarItem(
-            label: 'Messages',
-            icon: new Icon(Icons.mail),
-          ),
+              label: 'Messages',
+              icon: new Icon(
+                MyFlutterApp.group_13,
+              )),
           BottomNavigationBarItem(
             label: 'Account',
-            icon: Icon(Icons.person),
+            icon: Icon(MyFlutterApp.user__1_),
           )
         ],
       ),
@@ -82,9 +86,7 @@ class _MyChildState extends State<MyChild> {
   }
 
   List<Classworks> classworkslist = [];
-  List<Homework> homeWorklist = [];
-  List<Projects> projects = [];
-  List<Extraclasses> extras = [];
+
   List<InstallmentClass> installments = [];
   Classroom classroom = spiderMan.classroom;
   Widget _buildAboutDialog(BuildContext context) {
@@ -108,9 +110,7 @@ class _MyChildState extends State<MyChild> {
                         setState(() {
                           selectedChild = i;
                           classworkslist = i.classworks;
-                          homeWorklist = i.homeworks;
-                          extras = i.extraClasses;
-                          projects = i.projects;
+
                           installments = i.installments;
                           classroom = i.classroom;
                         });
@@ -183,17 +183,35 @@ class _MyChildState extends State<MyChild> {
               homeContainers(
                   'assets/icons/homework.png',
                   'Homework',
-                  ClassworksList(homeWorklist, 'Homeworks', widget.parent),
+                  ClassworksList(
+                      classworkslist
+                          .where((i) => i.type == SubjectType.Homwork)
+                          .toList(),
+                      'Homeworks',
+                      widget.parent),
                   context),
-              homeContainers('assets/icons/projects.png', 'Projects',
-                  ClassworksList(projects, 'Projects', widget.parent), context),
+              homeContainers(
+                  'assets/icons/projects.png',
+                  'Projects',
+                  ClassworksList(
+                      classworkslist
+                          .where((i) => i.type == SubjectType.Projects)
+                          .toList(),
+                      'Projects',
+                      widget.parent),
+                  context),
               homeContainers(
                   'assets/icons/extraclasses.png',
                   'Extraclasses',
-                  ClassworksList(extras, 'Extra Classes', widget.parent),
+                  ClassworksList(
+                      classworkslist
+                          .where((i) => i.type == SubjectType.Extra)
+                          .toList(),
+                      'Extra Classes',
+                      widget.parent),
                   context),
               homeContainers('assets/icons/schedule.png', 'Schedule',
-                  Schedule(classroom, selectedChild), context),
+                  TeacherCalender(calender1), context),
               homeContainers(
                   'assets/icons/exams.png',
                   'Exams',

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:madrasty/assets/my_flutter_app_icons.dart';
 import 'package:madrasty/models/bus.dart';
 import 'package:madrasty/models/exam.dart';
 import 'package:madrasty/models/subject.dart';
@@ -46,19 +47,19 @@ class _HomeChildState extends State<HomeChild> {
         items: [
           BottomNavigationBarItem(
             label: 'Home',
-            icon: new Icon(Icons.home),
+            icon: new Icon(MyFlutterApp.browser),
           ),
           BottomNavigationBarItem(
             label: 'Messages',
-            icon: new Icon(Icons.mail),
+            icon: new Icon(MyFlutterApp.group_13),
           ),
           BottomNavigationBarItem(
             label: 'Account',
-            icon: Icon(Icons.bus_alert),
+            icon: Icon(MyFlutterApp.location),
           ),
           BottomNavigationBarItem(
             label: 'Account',
-            icon: Icon(Icons.person),
+            icon: Icon(MyFlutterApp.user__1_),
           )
         ],
       ),
@@ -82,42 +83,24 @@ class _HomeChildListState extends State<HomeChildList> {
   Widget buildListTile(
       String img, String title, Widget route, BuildContext context, List list) {
     Color color;
-    setState(() {
-      checkAvatar(list) ? color = mainColor : color = secondryColor;
-    });
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
-        CircleAvatar(
-          radius: 12.0,
-          child: Icon(Icons.done, color: Colors.white),
-          backgroundColor: color,
+
+    return Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12.0),
+      ),
+      child: ListTile(
+        onTap: () {
+          Navigator.push(context, MaterialPageRoute(builder: (_) => route));
+        },
+        contentPadding: EdgeInsets.all(20),
+        leading: CircleAvatar(
+          radius: 30.0,
+          backgroundColor: backgroundColor,
+          child: Image.asset(img),
         ),
-        SizedBox(
-          width: 20,
-        ),
-        Expanded(
-          child: Card(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12.0),
-            ),
-            child: ListTile(
-              onTap: () {
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (_) => route));
-              },
-              contentPadding: EdgeInsets.all(20),
-              leading: CircleAvatar(
-                radius: 30.0,
-                backgroundColor: backgroundColor,
-                child: Image.asset(img),
-              ),
-              title: Text(title),
-              subtitle: Text(''),
-            ),
-          ),
-        ),
-      ],
+        title: Text(title),
+        subtitle: Text(''),
+      ),
     );
   }
 
@@ -171,6 +154,12 @@ class _HomeChildListState extends State<HomeChildList> {
                     context,
                     todayExtra)
                 : Container(),
+            buildListTile(
+                'assets/icons/evulation.png',
+                'Evaluations',
+                ClassworksList(todayProjects, 'Projects', widget.user),
+                context,
+                todayProjects),
           ],
         ),
       ),

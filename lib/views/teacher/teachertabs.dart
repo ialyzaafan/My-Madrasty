@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:madrasty/assets/my_flutter_app_icons.dart';
 import 'package:madrasty/models/bus.dart';
 import 'package:madrasty/models/calenderClass.dart';
 import 'package:madrasty/models/user.dart';
@@ -45,23 +46,23 @@ class _TeacherTabsState extends State<TeacherTabs> {
         items: [
           BottomNavigationBarItem(
             label: 'Home',
-            icon: new Icon(Icons.home),
+            icon: new Icon(MyFlutterApp.calendar__1_),
           ),
           BottomNavigationBarItem(
             label: 'Messages',
-            icon: new Icon(Icons.mail),
+            icon: new Icon(MyFlutterApp.group_13),
           ),
           BottomNavigationBarItem(
             label: 'Bus',
-            icon: Icon(Icons.drive_eta),
+            icon: Icon(MyFlutterApp.location),
           ),
           BottomNavigationBarItem(
             label: 'Account',
-            icon: Icon(Icons.person),
+            icon: Icon(MyFlutterApp.user__1_),
           ),
           BottomNavigationBarItem(
             label: 'Categories',
-            icon: Icon(Icons.category_outlined),
+            icon: Icon(MyFlutterApp.open_menu),
           ),
         ],
       ),

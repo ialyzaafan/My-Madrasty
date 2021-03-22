@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:madrasty/assets/my_flutter_app_icons.dart';
 import 'package:madrasty/models/calenderClass.dart';
 import 'package:madrasty/models/user.dart';
 import 'package:madrasty/style/style.dart';
@@ -89,79 +90,66 @@ class _TeacherCalenderState extends State<TeacherCalender>
             child: cardWithBorder(
                 Column(
                   mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    ListTile(
-                      subtitle: Row(
-                        children: [
-                          Icon(
-                            Icons.pin_drop_outlined,
-                            size: 20,
-                            color: mainColor,
-                          ),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          Text(
-                            year + title + ' ' + location,
-                            style: paragraphStyle,
-                          )
-                        ],
-                      ),
-                      title: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              Column(
-                                children: [
-                                  Text(
-                                    subjName,
-                                    style: smallTitleStyle,
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Row(
-                            children: [
-                              Icon(
-                                Icons.alarm_add_outlined,
-                                size: 20,
-                                color: mainColor,
-                              ),
-                              SizedBox(
-                                width: 5,
-                              ),
-                              Text(
-                                duration.inHours.toString() + ' Hrs',
-                                style: paragraphStyle,
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Row(
-                            children: [
-                              Icon(
-                                Icons.person_outline,
-                                size: 20,
-                                color: mainColor,
-                              ),
-                              SizedBox(
-                                width: 5,
-                              ),
-                              Text(
-                                students.toString() + ' Students',
-                                style: paragraphStyle,
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
+                    Text(
+                      subjName,
+                      style: smallTitleStyle,
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.alarm_add_outlined,
+                          size: 20,
+                          color: mainColor,
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Text(
+                          duration.inHours.toString() + ' Hrs',
+                          style: paragraphStyle,
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Row(
+                      children: [
+                        Icon(
+                          MyFlutterApp.child,
+                          color: mainColor,
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Text(
+                          students.length.toString() + ' Students',
+                          style: paragraphStyle,
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Row(
+                      children: [
+                        Icon(
+                          MyFlutterApp.location,
+                          color: mainColor,
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Text(
+                          year + title + ' ' + location,
+                          style: paragraphStyle,
+                        )
+                      ],
                     ),
                   ],
                 ),
@@ -174,6 +162,7 @@ class _TeacherCalenderState extends State<TeacherCalender>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        iconTheme: IconThemeData(color: mainColor),
         title: Text(
           'Calender',
           style: titleStyle,

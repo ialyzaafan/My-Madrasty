@@ -1,15 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:madrasty/assets/my_flutter_app_icons.dart';
 import 'package:madrasty/models/bus.dart';
+import 'package:madrasty/models/calenderClass.dart';
 import 'package:madrasty/models/subject.dart';
 import 'package:madrasty/models/user.dart';
 import 'package:madrasty/style/style.dart';
 import 'package:madrasty/views/bus/listofBuses.dart';
 import 'package:madrasty/views/chatUI/homeChat.dart';
-import 'package:madrasty/views/child/classWorks.dart';
 import 'package:madrasty/views/classrooms/schedule.dart';
 import 'package:madrasty/views/general/General.dart';
 import 'package:madrasty/views/profileUI/myAcc.dart';
+import 'package:madrasty/views/teacher/teacherCalender.dart';
 
 import 'ListofStaff.dart';
 
@@ -46,15 +48,15 @@ class _HomePrincipleState extends State<HomePrinciple> {
         items: [
           BottomNavigationBarItem(
             label: 'Home',
-            icon: new Icon(Icons.home),
+            icon: new Icon(MyFlutterApp.browser),
           ),
           BottomNavigationBarItem(
             label: 'Messages',
-            icon: new Icon(Icons.mail),
+            icon: new Icon(MyFlutterApp.group_13),
           ),
           BottomNavigationBarItem(
             label: 'Account',
-            icon: Icon(Icons.person),
+            icon: Icon(MyFlutterApp.user__1_),
           )
         ],
       ),
@@ -84,7 +86,7 @@ class PrincpleManagment extends StatelessWidget {
               homeContainers('assets/icons/transport.png', 'Buses',
                   ListOfBuses([bus1]), context),
               homeContainers('assets/icons/schedule.png', 'Schedule',
-                  Schedule(spiderMan.classroom, User()), context),
+                  TeacherCalender(calender1), context),
             ],
           ),
         ),

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:madrasty/models/exam.dart';
 import 'package:madrasty/models/user.dart';
 import 'package:madrasty/style/style.dart';
-import 'package:madrasty/views/exam/scroll.dart';
 import 'package:madrasty/views/general/General.dart';
 
 class ReviewExam extends StatelessWidget {

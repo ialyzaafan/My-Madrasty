@@ -5,12 +5,13 @@ import 'package:madrasty/views/exam/addQuestions.dart';
 import 'package:madrasty/views/general/General.dart';
 
 class BuildExam extends StatefulWidget {
+  final List<Section> sections;
+  BuildExam(this.sections);
   @override
   _BuildExamState createState() => _BuildExamState();
 }
 
 class _BuildExamState extends State<BuildExam> {
-  List<Section> _sections = [];
   String _errorMsg = '';
 
   @override
@@ -19,7 +20,7 @@ class _BuildExamState extends State<BuildExam> {
       children: [
         ListView.builder(
           shrinkWrap: true,
-          itemCount: _sections.length,
+          itemCount: widget.sections.length,
           physics: NeverScrollableScrollPhysics(),
           itemBuilder: (BuildContext context, int index) {
             return Column(
@@ -34,7 +35,7 @@ class _BuildExamState extends State<BuildExam> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         DropdownButton(
-                          value: _sections[index].type,
+                          value: widget.sections[index].type,
                           iconSize: 30,
                           underline: Container(),
                           hint: Text('Section Type'),
@@ -63,20 +64,19 @@ class _BuildExamState extends State<BuildExam> {
                           ],
                           onChanged: (value) {
                             setState(() {
-                              _sections[index].type = value;
+                              widget.sections[index].type = value;
                             });
                           },
                         ),
-                        QuestionsBuilder(
-                            _sections[index].questions, _sections[index].type),
+                        QuestionsBuilder(widget.sections[index].questions,
+                            widget.sections[index].type),
                         SizedBox(
                           height: 10,
                         ),
                         buttonWithIcon(context, () {
-                          if (_sections[index].questions.length <= 10) {
+                          if (widget.sections[index].questions.length <= 10) {
                             setState(() {
-                              _sections[index]
-                                  .questions
+                              widget.sections[index].questions
                                   .add(Question(index + 1, '', 40, []));
                             });
                           } else {
@@ -105,9 +105,9 @@ class _BuildExamState extends State<BuildExam> {
           height: 10,
         ),
         buttonWithIcon(context, () {
-          if (_sections.length < 3) {
+          if (widget.sections.length < 3) {
             setState(() {
-              _sections.add(Section(1, SectionType.Essay, []));
+              widget.sections.add(Section(1, SectionType.Essay, []));
             });
           } else {
             setState(() {

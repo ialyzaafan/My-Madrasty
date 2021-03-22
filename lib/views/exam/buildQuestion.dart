@@ -14,6 +14,11 @@ class BuildAddQuestionChoose extends StatefulWidget {
 }
 
 class _BuildAddQuestionChooseState extends State<BuildAddQuestionChoose> {
+  final Map<String, dynamic> _data = {
+    'id': null,
+    'question': null,
+    'answers': null
+  };
   String _errorMsg = '';
   Question _question;
   @override
@@ -26,13 +31,12 @@ class _BuildAddQuestionChooseState extends State<BuildAddQuestionChoose> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        buildTextFormField(
-            'Question ${widget.index}',
-            context,
-            FocusNode(),
-            'What is ....?',
-            (String value) {},
-            (String value) {},
+        buildTextFormField('Question ${widget.index}', context, FocusNode(),
+            'What is ....?', (String value) {}, (String value) {
+          setState(() {
+            _data['question'] = value;
+          });
+        },
             InkWell(
               onTap: widget.onTap,
               child: Icon(

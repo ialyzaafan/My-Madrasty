@@ -3,7 +3,6 @@ import 'package:madrasty/models/user.dart';
 import 'package:madrasty/style/style.dart';
 import 'package:madrasty/views/attendence/LeaveRequest.dart';
 import 'package:madrasty/views/general/General.dart';
-import 'package:percent_indicator/percent_indicator.dart';
 
 class AttendView extends StatelessWidget {
   final user;
@@ -197,15 +196,14 @@ class AttendView extends StatelessWidget {
                                       SizedBox(
                                         height: 10,
                                       ),
-                                      LinearPercentIndicator(
-                                        width:
-                                            MediaQuery.of(context).size.width -
-                                                100,
-                                        lineHeight: 12.0,
-                                        percent: (1 -
+                                      LinearProgressIndicator(
+                                        value: (1 -
                                             (user.attendances.length / 30)),
                                         backgroundColor: backgroundColor,
-                                        progressColor: mainColor,
+                                        valueColor:
+                                            AlwaysStoppedAnimation<Color>(
+                                                mainColor),
+                                        minHeight: 5,
                                       ),
                                     ],
                                   )),

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:madrasty/models/exam.dart';
 import 'package:madrasty/views/exam/buildQuestion.dart';
-import 'package:madrasty/views/general/General.dart';
 
 class QuestionsBuilder extends StatefulWidget {
   final List<Question> questions;
@@ -33,7 +32,7 @@ class _QuestionsBuilderState extends State<QuestionsBuilder> {
                 setState(() {
                   _questions.removeAt(index);
                 });
-              }, index + 1, widget.type)
+              }, index, widget.type)
             : BuildAddQuestionChoose(_questions[index], () {
                 setState(() {
                   _questions.removeAt(index);

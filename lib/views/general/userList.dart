@@ -2,7 +2,6 @@ import 'package:madrasty/models/exam.dart';
 import 'package:madrasty/models/searchDelegate.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:madrasty/models/subject.dart';
 import 'package:madrasty/models/user.dart';
 import 'package:madrasty/style/style.dart';
 import 'package:madrasty/views/exam/reviewExam.dart';

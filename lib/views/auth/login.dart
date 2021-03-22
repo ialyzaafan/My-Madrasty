@@ -22,13 +22,13 @@ class _LoginState extends State<Login> {
       return;
     } else {
       _formKey.currentState.save();
-      _formData['username'] == 'teacher@Madrasty.com'
+      _formData['username'] == 'teacher'
           ? Navigator.of(context)
               .pushReplacement(MaterialPageRoute(builder: (_) => TeacherTabs()))
-          : _formData['username'] == 'parent@Madrasty.com'
+          : _formData['username'] == 'parent'
               ? Navigator.of(context).pushReplacement(
                   MaterialPageRoute(builder: (_) => Home(currentParent)))
-              : _formData['username'] == 'student@Madrasty.com'
+              : _formData['username'] == 'student'
                   ? Navigator.of(context).pushReplacement(
                       MaterialPageRoute(builder: (_) => HomeChild()))
                   : Navigator.of(context).pushReplacement(

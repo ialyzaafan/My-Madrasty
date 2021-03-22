@@ -19,7 +19,7 @@ const titleStyle = TextStyle(
     color: fontColor1,
     letterSpacing: 0,
     fontFamily: "Montserrat",
-    fontWeight: FontWeight.w500);
+    fontWeight: FontWeight.w600);
 const maincolorLightBig = TextStyle(
     fontSize: 51,
     color: mainColor,
@@ -31,21 +31,21 @@ const maincolorLightSmall = TextStyle(
     color: mainColor,
     letterSpacing: 0,
     fontFamily: "Montserrat",
-    fontWeight: FontWeight.normal);
+    fontWeight: FontWeight.w300);
 
 const smallTitleStyle = TextStyle(
     fontSize: 18,
     color: fontColor1,
     letterSpacing: 0,
     fontFamily: "Montserrat",
-    fontWeight: FontWeight.w500);
+    fontWeight: FontWeight.w400);
 
 const whiteSmallTitleStyle = TextStyle(
     fontSize: 18,
     color: Colors.white,
     letterSpacing: 0,
     fontFamily: "Montserrat",
-    fontWeight: FontWeight.w500);
+    fontWeight: FontWeight.w400);
 const backgroundTextStyle = TextStyle(
     fontSize: 14,
     color: backgroundText,
@@ -54,11 +54,11 @@ const backgroundTextStyle = TextStyle(
     fontWeight: FontWeight.w300);
 
 const mainColorTextStyle = TextStyle(
-  fontSize: 16,
-  color: mainColor,
-  letterSpacing: 0,
-  fontFamily: "Montserrat",
-);
+    fontSize: 18,
+    color: mainColor,
+    letterSpacing: 0,
+    fontFamily: "Montserrat",
+    fontWeight: FontWeight.w400);
 const mainColorTitleTextStyle = TextStyle(
   fontSize: 18,
   color: mainColor,
