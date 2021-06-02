@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:madrasty/models/exam.dart';
 import 'package:madrasty/models/user.dart';
 import 'package:madrasty/style/style.dart';
-import 'package:madrasty/views/general/General.dart';
+import 'package:madrasty/views/general/widgets/smallRichText.dart';
+import 'package:madrasty/views/general/widgets/smallText.dart';
+import 'package:madrasty/views/notifications/notficationMethods.dart';
+import 'package:madrasty/views/general/widgets/parentContainer.dart';
+import 'package:madrasty/views/general/widgets/roundedCard.dart';
 
 class ReviewExam extends StatelessWidget {
   final User userExamed;
@@ -101,34 +105,16 @@ class ReviewExam extends StatelessWidget {
         ),
       ),
       backgroundColor: backgroundColor,
-      body: containerPadding(
-        ListView(
+      body: ParentContainer(
+        child: ListView(
           children: [
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-              RichText(
-                  textAlign: TextAlign.start,
-                  text: TextSpan(children: [
-                    TextSpan(text: '${exam.title}', style: smallTitleStyle),
-                    TextSpan(text: '\n'),
-                    TextSpan(
-                      text: arabicExam.examType,
-                      style: backgroundTextStyle,
-                    )
-                  ])),
-              RichText(
-                  textAlign: TextAlign.start,
-                  text: TextSpan(children: [
-                    TextSpan(
-                        text:
-                            '${exam.sections.expand((e) => e.questions).toList().length} Questions',
-                        style: backgroundTextStyle),
-                    TextSpan(text: '\n'),
-                    TextSpan(
-                      text:
-                          '${exam.mark} / ${exam.sections.expand((e) => e.questions).toList().fold(0, (sum, item) => sum + item.mark)} marks',
-                      style: backgroundTextStyle,
-                    )
-                  ])),
+              SmallRichText(text1: '${exam.title}', text2: arabicExam.examType),
+              SmallRichText(
+                  text1:
+                      '${exam.sections.expand((e) => e.questions).toList().length} Questions',
+                  text2:
+                      '${exam.mark} / ${exam.sections.expand((e) => e.questions).toList().fold(0, (sum, item) => sum + item.mark)} marks'),
             ]),
             user.type == Type.Teacher
                 ? SizedBox(
@@ -136,12 +122,10 @@ class ReviewExam extends StatelessWidget {
                   )
                 : Container(),
             user.type == Type.Teacher
-                ? roundedCard(
-                    ListTile(
-                      title: Text(
-                        userExamed.name,
-                        style: smallTitleStyle,
-                      ),
+                ? RoundedCard(
+                    color: Colors.white,
+                    child: ListTile(
+                      title: SmallText(text: userExamed.name),
                       leading: CircleAvatar(
                         radius: 30,
                         backgroundImage: AssetImage(userExamed.imgUrl),
@@ -149,8 +133,7 @@ class ReviewExam extends StatelessWidget {
                       contentPadding: EdgeInsets.only(
                           left: 70, right: 50, top: 20, bottom: 20),
                     ),
-                    Colors.white,
-                    0.0)
+                  )
                 : Container(),
             SizedBox(
               height: 20,
@@ -167,10 +150,7 @@ class ReviewExam extends StatelessWidget {
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          'Section ${index + 1}',
-                          style: smallTitleStyle,
-                        ),
+                        SmallText(text: 'Section ${index + 1}'),
                         Text(
                           exam.sections[index].type == SectionType.Choose
                               ? 'Choose Questions Type'

@@ -3,8 +3,13 @@ import 'package:madrasty/assets/my_flutter_app_icons.dart';
 import 'package:madrasty/models/calenderClass.dart';
 import 'package:madrasty/models/user.dart';
 import 'package:madrasty/style/style.dart';
-import 'package:madrasty/views/general/General.dart';
+import 'package:madrasty/views/general/widgets/smallText.dart';
+import 'package:madrasty/views/general/widgets/whiteSmallText.dart';
+import 'package:madrasty/views/notifications/notficationMethods.dart';
 import 'package:intl/intl.dart';
+import 'package:madrasty/views/general/widgets/borderCard.dart';
+import 'package:madrasty/views/general/widgets/parentContainer.dart';
+import 'package:madrasty/views/general/widgets/roundedCard.dart';
 import 'package:madrasty/views/notifications/HomeNotfications.dart';
 
 class TeacherCalender extends StatefulWidget {
@@ -87,15 +92,12 @@ class _TeacherCalenderState extends State<TeacherCalender>
         Container(
             constraints:
                 BoxConstraints(minWidth: MediaQuery.of(context).size.width),
-            child: cardWithBorder(
-                Column(
+            child: BorderCard(
+                child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      subjName,
-                      style: smallTitleStyle,
-                    ),
+                    SmallText(text: subjName),
                     SizedBox(
                       height: 10,
                     ),
@@ -153,7 +155,7 @@ class _TeacherCalenderState extends State<TeacherCalender>
                     ),
                   ],
                 ),
-                backgroundColor))
+                color: backgroundColor))
       ],
     );
   }
@@ -206,28 +208,32 @@ class _TeacherCalenderState extends State<TeacherCalender>
                       children: [
                         Container(
                           constraints: BoxConstraints(minWidth: 70),
-                          child: roundedCard(
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    DateFormat('EEEE')
-                                        .format(widget._clndrList[index].day)
-                                        .substring(0, 3),
-                                    style: _index == index
-                                        ? whiteSmallTitleStyle
-                                        : smallTitleStyle,
-                                  ),
-                                  Text(
-                                    widget._clndrList[index].day.day.toString(),
-                                    style: _index == index
-                                        ? whiteParagraphStyle
-                                        : paragraphStyle,
-                                  )
-                                ],
-                              ),
-                              _index == index ? mainColor : backgroundColor,
-                              0.0),
+                          child: RoundedCard(
+                            color:
+                                _index == index ? mainColor : backgroundColor,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                _index == index
+                                    ? WhiteSmallText(
+                                        text: DateFormat('EEEE')
+                                            .format(
+                                                widget._clndrList[index].day)
+                                            .substring(0, 3))
+                                    : SmallText(
+                                        text: DateFormat('EEEE')
+                                            .format(
+                                                widget._clndrList[index].day)
+                                            .substring(0, 3)),
+                                Text(
+                                  widget._clndrList[index].day.day.toString(),
+                                  style: _index == index
+                                      ? whiteParagraphStyle
+                                      : paragraphStyle,
+                                )
+                              ],
+                            ),
+                          ),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(top: 2, bottom: 0),
@@ -244,7 +250,8 @@ class _TeacherCalenderState extends State<TeacherCalender>
             ),
           ),
           Expanded(
-            child: containerPadding(ListView.builder(
+            child: ParentContainer(
+                child: ListView.builder(
               itemCount: widget._clndrList[_index].todo.length,
               itemBuilder: (BuildContext context, int index) {
                 return Padding(

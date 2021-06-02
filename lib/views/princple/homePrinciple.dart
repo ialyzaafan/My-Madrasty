@@ -9,7 +9,9 @@ import 'package:madrasty/style/style.dart';
 import 'package:madrasty/views/bus/listofBuses.dart';
 import 'package:madrasty/views/chatUI/homeChat.dart';
 import 'package:madrasty/views/classrooms/schedule.dart';
-import 'package:madrasty/views/general/General.dart';
+import 'package:madrasty/views/notifications/notficationMethods.dart';
+import 'package:madrasty/views/general/widgets/homeContainers.dart';
+import 'package:madrasty/views/general/widgets/parentContainer.dart';
 import 'package:madrasty/views/profileUI/myAcc.dart';
 import 'package:madrasty/views/teacher/teacherCalender.dart';
 
@@ -75,18 +77,29 @@ class PrincpleManagment extends StatelessWidget {
         elevation: 0,
       ),
       backgroundColor: backgroundColor,
-      body: containerPadding(
-        SingleChildScrollView(
+      body: ParentContainer(
+        child: SingleChildScrollView(
           child: Wrap(
             children: [
-              homeContainers('assets/icons/stuff.png', 'Staff',
-                  ListOfStaff('Staff', staff), context),
-              homeContainers('assets/icons/students.png', 'Students',
-                  ListOfStaff('Grades', grades), context),
-              homeContainers('assets/icons/transport.png', 'Buses',
-                  ListOfBuses([bus1]), context),
-              homeContainers('assets/icons/schedule.png', 'Schedule',
-                  TeacherCalender(calender1), context),
+              HomeContainers(
+                img: 'assets/icons/stuff.png',
+                title: 'Staff',
+                child: ListOfStaff('Staff', staff),
+              ),
+              HomeContainers(
+                img: 'assets/icons/students.png',
+                title: 'Students',
+                child: ListOfStaff('Grades', grades),
+              ),
+              HomeContainers(
+                img: 'assets/icons/transport.png',
+                title: 'Buses',
+                child: ListOfBuses([bus1]),
+              ),
+              HomeContainers(
+                  img: 'assets/icons/schedule.png',
+                  title: 'Schedule',
+                  child: TeacherCalender(calender1)),
             ],
           ),
         ),

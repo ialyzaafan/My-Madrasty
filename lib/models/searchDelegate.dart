@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:madrasty/style/style.dart';
+import 'package:madrasty/views/general/widgets/smallRichText.dart';
 import 'package:madrasty/views/profileUI/myAcc.dart';
 
 class DataSearch extends SearchDelegate<String> {
@@ -55,16 +56,8 @@ class DataSearch extends SearchDelegate<String> {
               radius: 30,
               backgroundImage: AssetImage(suggestionList[index].imgUrl),
             ),
-            title: RichText(
-              text: TextSpan(
-                  text: suggestionList[index].name.substring(0, query.length),
-                  children: [
-                    TextSpan(
-                        text:
-                            suggestionList[index].name.substring(query.length),
-                        style: backgroundTextStyle)
-                  ],
-                  style: smallTitleStyle),
-            )));
+            title: SmallRichText(
+                text1: suggestionList[index].name.substring(0, query.length),
+                text2: suggestionList[index].name.substring(query.length))));
   }
 }

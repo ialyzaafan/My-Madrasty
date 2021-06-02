@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:madrasty/helpers/ensure_visible.dart';
 import 'package:madrasty/style/style.dart';
-import 'package:madrasty/views/general/General.dart';
+import 'package:madrasty/views/notifications/notficationMethods.dart';
 import 'package:madrasty/views/general/autoClosePage.dart';
+import 'package:madrasty/views/general/widgets/buttonWithIcon.dart';
 
 class ForgetPassword extends StatefulWidget {
   @override
@@ -104,9 +105,12 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                 SizedBox(
                   height: 40,
                 ),
-                buttonWithIcon(context, () {
-                  _submitForm();
-                }, 'Forget Password', true)
+                ButtonWithIcon(
+                    onPress: () {
+                      _submitForm();
+                    },
+                    title: 'Forget Password',
+                    icon: true)
               ],
             ),
           ),

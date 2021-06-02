@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:madrasty/models/user.dart';
 
 import 'package:madrasty/style/style.dart';
-import 'package:madrasty/views/general/General.dart';
+import 'package:madrasty/views/notifications/notficationMethods.dart';
 import 'package:madrasty/views/general/listOfParentWidgets.dart';
+import 'package:madrasty/views/general/widgets/buildListSimple.dart';
+import 'package:madrasty/views/general/widgets/parentContainer.dart';
 
 class ListOfStaff extends StatefulWidget {
   final String title;
@@ -29,16 +31,15 @@ class _ListOfStaffState extends State<ListOfStaff> {
             style: titleStyle,
           ),
         ),
-        body: containerPadding(
-          ListView.builder(
+        body: ParentContainer(
+          child: ListView.builder(
             itemCount: widget.list.length,
             itemBuilder: (BuildContext context, int index) {
               return InkWell(
                 onTap: () {},
-                child: buildLisTileSimple(
-                    context,
-                    widget.list[index].title,
-                    ListofParentWidgets(
+                child: BuildListSimple(
+                    title: widget.list[index].title,
+                    route: ListofParentWidgets(
                         widget.title == 'Grades'
                             ? 'Classes'
                             : widget.list[index].type == Type.Teacher
@@ -54,11 +55,12 @@ class _ListOfStaffState extends State<ListOfStaff> {
                         widget.title == 'Grades'
                             ? widget.list[index].classrooms
                             : widget.list[index].classes),
-                    widget.title == 'Grades'
+                    length: widget.title == 'Grades'
                         ? widget.list[index].classrooms.length
                         : widget.list[index].classes.length,
-                    widget.list[index].imgURL,
-                    widget.title == 'Grades' ? 'Classes' : 'Departments'),
+                    imgUrl: widget.list[index].imgURL,
+                    title2:
+                        widget.title == 'Grades' ? 'Classes' : 'Departments'),
               );
             },
           ),

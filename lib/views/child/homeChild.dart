@@ -8,7 +8,8 @@ import 'package:madrasty/style/style.dart';
 import 'package:madrasty/views/bus/busView.dart';
 import 'package:madrasty/views/chatUI/homeChat.dart';
 import 'package:madrasty/views/child/classWorks.dart';
-import 'package:madrasty/views/general/General.dart';
+import 'package:madrasty/views/notifications/notficationMethods.dart';
+import 'package:madrasty/views/general/widgets/parentContainer.dart';
 
 import 'package:madrasty/views/profileUI/profileOut.dart';
 
@@ -117,8 +118,8 @@ class _HomeChildListState extends State<HomeChildList> {
           style: titleStyle,
         ),
       ),
-      body: containerPadding(
-        ListView(
+      body: ParentContainer(
+        child: ListView(
           children: [
             widget.user.type == Type.Child
                 ? buildListTile(

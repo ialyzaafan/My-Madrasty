@@ -1,5 +1,4 @@
-import 'package:fancy_on_boarding/fancy_on_boarding.dart';
-import 'package:flutter/material.dart';
+/*import 'package:flutter/material.dart';
 import 'package:madrasty/style/style.dart';
 import 'package:madrasty/views/auth/login.dart';
 
@@ -96,3 +95,4 @@ class _GettingStartedState extends State<GettingStarted> {
     );
   }
 }
+*/

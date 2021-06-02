@@ -4,7 +4,6 @@ import 'package:madrasty/models/subject.dart';
 import 'package:madrasty/models/user.dart';
 import 'package:madrasty/style/style.dart';
 import 'package:intl/intl.dart';
-import 'package:madrasty/views/general/General.dart';
 
 /*class Schedule extends StatefulWidget {
   final User user;

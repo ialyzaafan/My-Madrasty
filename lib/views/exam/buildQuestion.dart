@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:madrasty/models/exam.dart';
 import 'package:madrasty/style/style.dart';
-import 'package:madrasty/views/general/General.dart';
+import 'package:madrasty/views/notifications/notficationMethods.dart';
+import 'package:madrasty/views/general/widgets/answerTextField.dart';
+import 'package:madrasty/views/general/widgets/elevatedButtonSecond.dart';
+import 'package:madrasty/views/general/widgets/maintextfield.dart';
 
 class BuildAddQuestionChoose extends StatefulWidget {
   final Question question;
@@ -31,22 +34,22 @@ class _BuildAddQuestionChooseState extends State<BuildAddQuestionChoose> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        buildTextFormField('Question ${widget.index}', context, FocusNode(),
-            'What is ....?', (String value) {}, (String value) {
-          setState(() {
-            _data['question'] = value;
-          });
-        },
-            InkWell(
-              onTap: widget.onTap,
-              child: Icon(
-                Icons.delete_outline_outlined,
-                color: mainColor,
-              ),
+        BuildTextFormField(
+            definer: 'Question ${widget.index}',
+            hint: 'What is ....?',
+            validator: (String value) {},
+            onsave: (String value) {
+              setState(() {
+                _data['question'] = value;
+              });
+            },
+            suffix: Icon(
+              Icons.delete_outline_outlined,
+              color: mainColor,
             ),
-            false,
-            1,
-            Colors.white),
+            obscureText: false,
+            maxlin: 1,
+            color: Colors.white),
         ListView.builder(
           shrinkWrap: true,
           physics: NeverScrollableScrollPhysics(),
@@ -58,19 +61,22 @@ class _BuildAddQuestionChooseState extends State<BuildAddQuestionChoose> {
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
                   children: [
-                    answerTextFormField(
-                        context,
-                        FocusNode(),
-                        '${index + 1})...',
-                        (String value) {},
-                        (String value) {},
-                        false, () {
-                      setState(() {
-                        _question.answers.removeAt(index);
-                      });
-                    }, () {
-                      _question.answers[index].isImage = true;
-                    }, true, 1, true),
+                    AnswerTextfield(
+                        hint: '${index + 1})...',
+                        onsave: (String value) {},
+                        validator: (String value) {},
+                        obscureText: false,
+                        delete: () {
+                          setState(() {
+                            _question.answers.removeAt(index);
+                          });
+                        },
+                        perfix: () {
+                          _question.answers[index].isImage = true;
+                        },
+                        ismultiple: true,
+                        maxline: 1,
+                        containImg: true),
                     _question.answers[index].isImage
                         ? ClipRRect(
                             borderRadius: BorderRadius.circular(12),
@@ -85,18 +91,20 @@ class _BuildAddQuestionChooseState extends State<BuildAddQuestionChoose> {
         SizedBox(
           height: 5,
         ),
-        seconderyBtn(context, () {
-          if (_question.answers.length < 3) {
-            setState(() {
-              _question.answers.add(Answers(
-                  '', '', false, false, false, 'assets/images/class1.png'));
-            });
-          } else {
-            setState(() {
-              _errorMsg = 'You cannot add more than three Choices!..';
-            });
-          }
-        }, 'ADD OPTION'),
+        ElevatedButtonSecond(
+            onpress: () {
+              if (_question.answers.length < 3) {
+                setState(() {
+                  _question.answers.add(Answers(
+                      '', '', false, false, false, 'assets/images/class1.png'));
+                });
+              } else {
+                setState(() {
+                  _errorMsg = 'You cannot add more than three Choices!..';
+                });
+              }
+            },
+            title: 'ADD OPTION'),
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Text(
@@ -117,22 +125,17 @@ class BuildAddQuestionComplete extends StatelessWidget {
   BuildAddQuestionComplete(this.question, this.onTap, this.index, this.type);
   @override
   Widget build(BuildContext context) {
-    return buildTextFormField(
-        '',
-        context,
-        FocusNode(),
-        'Question ${index + 1} ...',
-        (String value) {},
-        (String value) {},
-        InkWell(
-          onTap: onTap,
-          child: Icon(
-            Icons.delete_outline_outlined,
-            color: mainColor,
-          ),
+    return BuildTextFormField(
+        definer: '',
+        hint: 'Question ${index + 1} ...',
+        validator: (String value) {},
+        onsave: (String value) {},
+        suffix: Icon(
+          Icons.delete_outline_outlined,
+          color: mainColor,
         ),
-        false,
-        type == SectionType.Essay ? 8 : 1,
-        type == SectionType.Essay ? secondryColor : Colors.white);
+        obscureText: false,
+        maxlin: type == SectionType.Essay ? 8 : 1,
+        color: type == SectionType.Essay ? secondryColor : Colors.white);
   }
 }

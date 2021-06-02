@@ -10,8 +10,11 @@ import 'package:madrasty/views/attendence/attendenceVIew.dart';
 
 import 'package:madrasty/views/child/classWorks.dart';
 import 'package:madrasty/views/classrooms/schedule.dart';
-import 'package:madrasty/views/general/General.dart';
+import 'package:madrasty/views/general/widgets/smallRichText.dart';
+import 'package:madrasty/views/notifications/notficationMethods.dart';
 import 'package:madrasty/views/general/listOfParentWidgets.dart';
+import 'package:madrasty/views/general/widgets/homeContainers.dart';
+import 'package:madrasty/views/general/widgets/parentContainer.dart';
 import 'package:madrasty/views/teacher/teacherCalender.dart';
 
 import 'myAcc.dart';
@@ -46,8 +49,8 @@ class ProfileChild extends StatelessWidget {
         elevation: 0,
       ),
       body: SingleChildScrollView(
-        child: containerPadding(
-          Center(
+        child: ParentContainer(
+          child: Center(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -55,66 +58,69 @@ class ProfileChild extends StatelessWidget {
                   radius: 50,
                   backgroundImage: AssetImage('assets/avatars/zod.jpg'),
                 ),
-                RichText(
-                    textAlign: TextAlign.center,
-                    text: TextSpan(children: [
-                      TextSpan(text: zod.name, style: smallTitleStyle),
-                      TextSpan(text: '\n'),
-                      TextSpan(
-                        text: 'class',
-                        style: backgroundTextStyle,
-                      )
-                    ])),
+                SmallRichText(text1: zod.name, text2: 'class'),
                 SizedBox(
                   height: 30,
                 ),
                 user.type == Type.Child
                     ? Wrap(
                         children: [
-                          homeContainers(
-                              'assets/icons/classwork.png',
-                              'Classwork',
-                              ClassworksList([], 'Classworks', user),
-                              context),
-                          homeContainers(
-                              'assets/icons/homework.png',
-                              'Homework',
-                              ClassworksList([], 'Homeworks', user),
-                              context),
-                          homeContainers(
-                              'assets/icons/projects.png',
-                              'Projects',
-                              ClassworksList([], 'Projects', user),
-                              context),
-                          homeContainers(
-                              'assets/icons/extraclasses.png',
-                              'Extraclasses',
-                              ClassworksList([], 'Extra classes', user),
-                              context),
-                          homeContainers('assets/icons/library.png', 'Library',
-                              LibraryView(schoolLibrary), context),
-                          homeContainers(
-                              'assets/icons/schedule.png',
-                              'My Schedule',
-                              TeacherCalender(calender1),
-                              context),
-                          homeContainers('assets/icons/exams.png', 'Exams',
-                              ClassworksList([], 'Exams', user), context),
-                          homeContainers('assets/icons/evulation.png',
-                              'Evaluations', Container(), context),
-                          homeContainers('assets/icons/attendence.png',
-                              'Attendance', AttendView(user), context),
+                          HomeContainers(
+                            img: 'assets/icons/classwork.png',
+                            title: 'Classwork',
+                            child: ClassworksList([], 'Classworks', user),
+                          ),
+                          HomeContainers(
+                            img: 'assets/icons/homework.png',
+                            title: 'Homework',
+                            child: ClassworksList([], 'Homeworks', user),
+                          ),
+                          HomeContainers(
+                            img: 'assets/icons/projects.png',
+                            title: 'Projects',
+                            child: ClassworksList([], 'Projects', user),
+                          ),
+                          HomeContainers(
+                            img: 'assets/icons/extraclasses.png',
+                            title: 'Extraclasses',
+                            child: ClassworksList([], 'Extra classes', user),
+                          ),
+                          HomeContainers(
+                              img: 'assets/icons/library.png',
+                              title: 'Library',
+                              child: LibraryView(schoolLibrary)),
+                          HomeContainers(
+                            img: 'assets/icons/schedule.png',
+                            title: 'My Schedule',
+                            child: TeacherCalender(calender1),
+                          ),
+                          HomeContainers(
+                            img: 'assets/icons/exams.png',
+                            title: 'Exams',
+                            child: ClassworksList([], 'Exams', user),
+                          ),
+                          HomeContainers(
+                              img: 'assets/icons/evulation.png',
+                              title: 'Evaluations',
+                              child: Container()),
+                          HomeContainers(
+                              img: 'assets/icons/attendence.png',
+                              title: 'Attendance',
+                              child: AttendView(user)),
                         ],
                       )
                     : Wrap(
                         children: [
-                          homeContainers('assets/icons/balance.png',
-                              'My Balance', AttendView(user), context),
-                          homeContainers(
-                              'assets/icons/classes.png',
-                              'My Classes',
-                              ListofParentWidgets('My Clases', classrooms),
-                              context),
+                          HomeContainers(
+                            img: 'assets/icons/balance.png',
+                            title: 'My Balance',
+                            child: AttendView(user),
+                          ),
+                          HomeContainers(
+                            img: 'assets/icons/classes.png',
+                            title: 'My Classes',
+                            child: ListofParentWidgets('My Clases', classrooms),
+                          ),
                         ],
                       )
               ],

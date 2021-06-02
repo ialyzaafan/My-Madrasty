@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:madrasty/models/notifications.dart';
 import 'package:madrasty/style/style.dart';
-import 'package:madrasty/views/general/General.dart';
+import 'package:madrasty/views/general/widgets/smallText.dart';
+import 'package:madrasty/views/general/widgets/textBackground.dart';
+import 'package:madrasty/views/notifications/notficationMethods.dart';
+import 'package:madrasty/views/general/widgets/parentContainer.dart';
 import 'package:madrasty/views/notifications/NotficationsDetails.dart';
 
 class HomeNotfications extends StatefulWidget {
@@ -25,8 +28,8 @@ class _HomeNotficationsState extends State<HomeNotfications> {
         elevation: 0,
         backgroundColor: backgroundColor,
       ),
-      body: containerPadding(
-        Center(
+      body: ParentContainer(
+        child: Center(
           child: notfications.length < 1
               ? Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -39,17 +42,12 @@ class _HomeNotficationsState extends State<HomeNotfications> {
                     SizedBox(
                       height: 20,
                     ),
-                    Text(
-                      'No Notifications',
-                      style: smallTitleStyle,
-                    ),
+                    SmallText(text: 'No Notifications'),
                     SizedBox(
                       height: 10,
                     ),
-                    Text(
-                      'Your notifications will appear here.',
-                      style: backgroundTextStyle,
-                    ),
+                    TextBackground(
+                        text: 'Your notifications will appear here.'),
                   ],
                 )
               : ListView.builder(
@@ -76,32 +74,23 @@ class _HomeNotficationsState extends State<HomeNotfications> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(
-                                    notficationType(notfications[index].type),
-                                    style: backgroundTextStyle,
-                                  ),
-                                  Text(
-                                    '${notfications[index].time.toLocal()}'
-                                        .split(' ')[0],
-                                    style: backgroundTextStyle,
-                                  )
+                                  TextBackground(
+                                      text: notficationType(
+                                          notfications[index].type)),
+                                  TextBackground(
+                                      text:
+                                          '${notfications[index].time.toLocal()}'
+                                              .split(' ')[0])
                                 ],
                               ),
                               SizedBox(
                                 height: 5,
                               ),
-                              Text(
-                                notfications[index].title,
-                                style: smallTitleStyle,
-                              ),
+                              SmallText(text: notfications[index].title),
                             ],
                           ),
-                          subtitle: Text(
-                            notfications[index].description,
-                            style: backgroundTextStyle,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
+                          subtitle: TextBackground(
+                              text: notfications[index].description),
                           trailing: Icon(Icons.chevron_right),
                           leading: CircleAvatar(
                             radius: 30,

@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:madrasty/models/bus.dart';
 import 'package:madrasty/style/style.dart';
 import 'package:madrasty/views/bus/busView.dart';
-import 'package:madrasty/views/general/General.dart';
+import 'package:madrasty/views/general/widgets/smallText.dart';
+import 'package:madrasty/views/notifications/notficationMethods.dart';
+import 'package:madrasty/views/general/widgets/parentContainer.dart';
+import 'package:madrasty/views/general/widgets/roundedCard.dart';
 
 class ListOfBuses extends StatelessWidget {
   List<Bus> buses;
@@ -20,39 +23,38 @@ class ListOfBuses extends StatelessWidget {
         ),
       ),
       backgroundColor: backgroundColor,
-      body: containerPadding(ListView.builder(
+      body: ParentContainer(
+          child: ListView.builder(
         itemCount: buses.length,
         itemBuilder: (BuildContext context, int index) {
-          return roundedCard(
-              ListTile(
-                onTap: () {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (_) => BusView(buses[index])));
-                },
-                leading: CircleAvatar(
-                  backgroundColor: backgroundColor,
-                  child: Image.asset('assets/icons/transport.png'),
-                ),
-                contentPadding: EdgeInsets.only(top: 20, bottom: 20),
-                title: Text(
-                  buses[index].title + ' . ' + buses[index].route.name,
-                  style: smallTitleStyle,
-                ),
-                subtitle: Text(buses[index]
-                        .route
-                        .checkpoints
-                        .expand((s) => s.students)
-                        .toList()
-                        .length
-                        .toString() +
-                    '  Students'),
-                trailing: Icon(
-                  Icons.chevron_right,
-                  color: mainColor,
-                ),
+          return RoundedCard(
+            color: Colors.white,
+            child: ListTile(
+              onTap: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (_) => BusView(buses[index])));
+              },
+              leading: CircleAvatar(
+                backgroundColor: backgroundColor,
+                child: Image.asset('assets/icons/transport.png'),
               ),
-              Colors.white,
-              0.0);
+              contentPadding: EdgeInsets.only(top: 20, bottom: 20),
+              title: SmallText(
+                  text: buses[index].title + ' . ' + buses[index].route.name),
+              subtitle: Text(buses[index]
+                      .route
+                      .checkpoints
+                      .expand((s) => s.students)
+                      .toList()
+                      .length
+                      .toString() +
+                  '  Students'),
+              trailing: Icon(
+                Icons.chevron_right,
+                color: mainColor,
+              ),
+            ),
+          );
         },
       )),
     );

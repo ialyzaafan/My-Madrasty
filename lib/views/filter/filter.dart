@@ -3,7 +3,10 @@ import 'package:madrasty/models/subject.dart';
 import 'package:madrasty/models/user.dart';
 import 'package:madrasty/style/style.dart';
 import 'package:madrasty/views/child/classWorks.dart';
-import 'package:madrasty/views/general/General.dart';
+import 'package:madrasty/views/general/widgets/dateInput.dart';
+import 'package:madrasty/views/general/widgets/elevatedButtonWithWhite.dart';
+import 'package:madrasty/views/general/widgets/smallText.dart';
+import 'package:madrasty/views/general/widgets/parentContainer.dart';
 
 class FilterLists extends StatefulWidget {
   final String title;
@@ -15,7 +18,6 @@ class FilterLists extends StatefulWidget {
 }
 
 class _FilterListsState extends State<FilterLists> {
-  DateTime _selectedDate = DateTime.now();
   List filteredList = [];
   @override
   Widget build(BuildContext context) {
@@ -30,14 +32,11 @@ class _FilterListsState extends State<FilterLists> {
         ),
       ),
       backgroundColor: backgroundColor,
-      body: containerPadding(
-        Column(
+      body: ParentContainer(
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              widget.filterdListTitle,
-              style: smallTitleStyle,
-            ),
+            SmallText(text: widget.filterdListTitle),
             SizedBox(
               height: 10,
             ),
@@ -48,83 +47,35 @@ class _FilterListsState extends State<FilterLists> {
             SizedBox(
               height: 20,
             ),
-            Text(
-              'Date',
-              style: smallTitleStyle,
-            ),
+            SmallText(text: 'Date'),
             SizedBox(
               height: 10,
             ),
             Container(
               constraints: BoxConstraints(
                   maxWidth: MediaQuery.of(context).size.width / 2),
-              child: InkWell(
-                onTap: () => _selectDate(context),
-                child: Card(
-                  elevation: 0,
-                  child: Center(
-                      child: Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: Text(
-                      "${_selectedDate.toLocal()}".split(' ')[0],
-                      style: paragraphStyle,
-                    ),
-                  )),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12)),
-                ),
-              ),
+              child: DateInput(),
             ),
             Expanded(child: Container()),
             Container(
               constraints:
                   BoxConstraints(minWidth: MediaQuery.of(context).size.width),
-              child: RaisedButton(
-                child: Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Text(
-                    'Apply Filter',
-                    style: whiteSmallTitleStyle,
-                  ),
-                ),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12)),
-                elevation: 0,
-                onPressed: () {
-                  Navigator.pop(context);
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => ClassworksList(
-                            classworkss, 'Classworks', widget.user)),
-                  );
-                },
-                color: mainColor,
-              ),
+              child: ElevatedButtonWhiteSmall(
+                  func: () {
+                    Navigator.pop(context);
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ClassworksList(
+                              classworkss, 'Classworks', widget.user)),
+                    );
+                  },
+                  text: 'Apply Filter'),
             )
           ],
         ),
       ),
     );
-  }
-
-  _selectDate(BuildContext context) async {
-    final DateTime picked = await showDatePicker(
-      context: context,
-      initialDate: _selectedDate, // Refer step 1
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2025),
-      builder: (context, child) {
-        return Theme(
-          data: ThemeData.dark(), // This will change to light theme.
-          child: child,
-        );
-      },
-    );
-    if (picked != null && picked != _selectedDate)
-      setState(() {
-        _selectedDate = picked;
-      });
   }
 
   Widget _buildChips(options) {

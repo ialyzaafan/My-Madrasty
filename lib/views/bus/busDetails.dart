@@ -3,8 +3,15 @@ import 'package:flutter_countdown_timer/countdown_timer_controller.dart';
 import 'package:madrasty/models/bus.dart';
 import 'package:madrasty/models/user.dart';
 import 'package:madrasty/style/style.dart';
-import 'package:madrasty/views/general/General.dart';
+import 'package:madrasty/views/general/widgets/smallText.dart';
+import 'package:madrasty/views/notifications/notficationMethods.dart';
 import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
+import 'package:madrasty/views/general/widgets/borderCard.dart';
+import 'package:madrasty/views/general/widgets/buttonCard.dart';
+import 'package:madrasty/views/general/widgets/buttonWithIcon.dart';
+import 'package:madrasty/views/general/widgets/elevatedButtonSecond.dart';
+import 'package:madrasty/views/general/widgets/parentContainer.dart';
+import 'package:madrasty/views/general/widgets/roundedCard.dart';
 
 class BusDetails extends StatefulWidget {
   final User user;
@@ -45,13 +52,11 @@ class _BusDetailsState extends State<BusDetails> {
         elevation: 0,
         backgroundColor: backgroundColor,
       ),
-      body: containerPadding(Column(
+      body: ParentContainer(
+          child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            '${bus1.id}  • ${bus1.route.desc} trip',
-            style: smallTitleStyle,
-          ),
+          SmallText(text: '${bus1.id}  • ${bus1.route.desc} trip'),
           Text(sum.length.toString() + ' students on board',
               style: paragraphStyle),
           Expanded(
@@ -91,18 +96,16 @@ class _BusDetailsState extends State<BusDetails> {
                         SizedBox(
                           width: 5,
                         ),
-                        Text(
-                          bus1.route.checkpoints[index].name,
-                          style: smallTitleStyle,
-                        )
+                        SmallText(text: bus1.route.checkpoints[index].name)
                       ],
                     ),
                     Container(
                         constraints: BoxConstraints(
                             minWidth: MediaQuery.of(context).size.width),
                         child: bus1.route.checkpoints[index].students.length > 0
-                            ? roundedCard(
-                                Column(
+                            ? RoundedCard(
+                                color: Colors.white,
+                                child: Column(
                                   children: [
                                     ListView.builder(
                                       itemCount: bus1.route.checkpoints[index]
@@ -136,11 +139,12 @@ class _BusDetailsState extends State<BusDetails> {
                                                   .checkpoints[index]
                                                   .students[idx]
                                                   .imgUrl)),
-                                          title: Text(
-                                            bus1.route.checkpoints[index]
-                                                .students[idx].name,
-                                            style: smallTitleStyle,
-                                          ),
+                                          title: SmallText(
+                                              text: bus1
+                                                  .route
+                                                  .checkpoints[index]
+                                                  .students[idx]
+                                                  .name),
                                         );
                                       },
                                     ),
@@ -150,32 +154,34 @@ class _BusDetailsState extends State<BusDetails> {
                                                 MainAxisAlignment.center,
                                             children: [
                                               Container(
-                                                child: cardButton(
-                                                    Icons.time_to_leave,
-                                                    mainColor,
-                                                    backgroundColor,
-                                                    () {}),
+                                                child: ButtonCard(
+                                                    icon: Icons.time_to_leave,
+                                                    iconColor: mainColor,
+                                                    color: backgroundColor,
+                                                    function: () {}),
                                               ),
                                               Padding(
                                                 padding: const EdgeInsets.only(
                                                     left: 20, right: 20),
-                                                child: cardButton(
-                                                    Icons.notifications,
-                                                    Colors.white,
-                                                    Colors.yellow, () {
-                                                  setState(() {
-                                                    _currentPointIndex = index;
-                                                  });
-                                                }),
+                                                child: ButtonCard(
+                                                    icon: Icons.notifications,
+                                                    color: Colors.white,
+                                                    iconColor: Colors.yellow,
+                                                    function: () {
+                                                      setState(() {
+                                                        _currentPointIndex =
+                                                            index;
+                                                      });
+                                                    }),
                                               ),
-                                              cardButton(
-                                                  Icons.timer,
-                                                  Colors.white,
-                                                  secondryColor, () {
-                                                Navigator.of(context).push(
-                                                    MaterialPageRoute(
-                                                        builder: (_) =>
-                                                            CurrentCheckpoint(
+                                              ButtonCard(
+                                                  icon: Icons.timer,
+                                                  color: Colors.white,
+                                                  iconColor: secondryColor,
+                                                  function: () {
+                                                    Navigator.of(context).push(
+                                                        MaterialPageRoute(
+                                                            builder: (_) => CurrentCheckpoint(
                                                                 bus1
                                                                     .route
                                                                     .checkpoints[
@@ -186,14 +192,13 @@ class _BusDetailsState extends State<BusDetails> {
                                                                     .checkpoints[
                                                                         index]
                                                                     .waitingDuration)));
-                                              }),
+                                                  }),
                                             ],
                                           )
                                         : Container()
                                   ],
                                 ),
-                                Colors.white,
-                                0.0)
+                              )
                             : Center(
                                 child: Text('no students in this checkpoint')))
                   ],
@@ -237,86 +242,84 @@ class _CurrentCheckpointState extends State<CurrentCheckpoint> {
           elevation: 0,
         ),
         backgroundColor: backgroundColor,
-        body: containerPadding(
-          roundedCard(
-              ListView(
-                padding: EdgeInsets.all(20),
-                children: [
-                  Center(
-                    child: CountdownTimer(
-                      textStyle: titleStyle,
-                      onEnd: onEnd,
-                      endTime: endTime,
-                    ),
+        body: ParentContainer(
+          child: RoundedCard(
+            color: Colors.white,
+            child: ListView(
+              padding: EdgeInsets.all(20),
+              children: [
+                Center(
+                  child: CountdownTimer(
+                    textStyle: titleStyle,
+                    onEnd: onEnd,
+                    endTime: endTime,
                   ),
-                  Center(
-                      child: Text('Remaining waiting time',
-                          style: paragraphStyle)),
-                  ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: widget.students.length,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemBuilder: (BuildContext context, int index) {
-                      return Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              children: [
-                                CircleAvatar(
-                                  backgroundImage:
-                                      AssetImage(widget.students[index].imgUrl),
-                                  radius: 30,
-                                ),
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                Text(
-                                  widget.students[index].name,
-                                  style: smallTitleStyle,
-                                ),
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                InkWell(
-                                  onTap: () {},
-                                  child: cardWithBorder(
-                                      Icon(
-                                        Icons.done,
-                                        color: mainColor,
-                                      ),
-                                      mainColor.withOpacity(0.1)),
-                                ),
-                                InkWell(
-                                  onTap: () {},
-                                  child: cardWithBorder(
-                                      Icon(
-                                        Icons.close,
-                                        color: Colors.red,
-                                      ),
-                                      Colors.red.withOpacity(0.1)),
-                                ),
-                              ],
-                            )
-                          ],
-                        ),
-                      );
-                    },
-                  ),
-                  SizedBox(
-                    height: 30,
-                  ),
-                  buttonWithIcon(context, () {}, 'Continue Trip', false),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  seconderyBtn(context, () {}, 'Call Parent')
-                ],
-              ),
-              Colors.white,
-              0.0),
+                ),
+                Center(
+                    child:
+                        Text('Remaining waiting time', style: paragraphStyle)),
+                ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: widget.students.length,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemBuilder: (BuildContext context, int index) {
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              CircleAvatar(
+                                backgroundImage:
+                                    AssetImage(widget.students[index].imgUrl),
+                                radius: 30,
+                              ),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              SmallText(text: widget.students[index].name),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              InkWell(
+                                onTap: () {},
+                                child: BorderCard(
+                                    child: Icon(
+                                      Icons.done,
+                                      color: mainColor,
+                                    ),
+                                    color: mainColor.withOpacity(0.1)),
+                              ),
+                              InkWell(
+                                onTap: () {},
+                                child: BorderCard(
+                                    child: Icon(
+                                      Icons.close,
+                                      color: Colors.red,
+                                    ),
+                                    color: Colors.red.withOpacity(0.1)),
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                    );
+                  },
+                ),
+                SizedBox(
+                  height: 30,
+                ),
+                ButtonWithIcon(
+                    onPress: () {}, title: 'Continue Trip', icon: false),
+                SizedBox(
+                  height: 10,
+                ),
+                ElevatedButtonSecond(onpress: () {}, title: 'Call Parent')
+              ],
+            ),
+          ),
         ));
   }
 }

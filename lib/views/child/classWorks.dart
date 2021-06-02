@@ -7,8 +7,12 @@ import 'package:madrasty/views/child/workDetails.dart';
 import 'package:madrasty/views/exam/addExam.dart';
 import 'package:madrasty/views/exam/exam.dart';
 import 'package:madrasty/views/filter/filter.dart';
-import 'package:madrasty/views/general/General.dart';
+import 'package:madrasty/views/general/widgets/smallText.dart';
+import 'package:madrasty/views/general/widgets/textBackground.dart';
+import 'package:madrasty/views/notifications/notficationMethods.dart';
 import 'package:madrasty/views/general/userList.dart';
+import 'package:madrasty/views/general/widgets/buttonWithIcon.dart';
+import 'package:madrasty/views/general/widgets/parentContainer.dart';
 
 class ClassworksList extends StatefulWidget {
   final List list;
@@ -112,8 +116,8 @@ class _ClassworksListState extends State<ClassworksList> {
         ),
       ),
       backgroundColor: backgroundColor,
-      body: containerPadding(
-        Column(
+      body: ParentContainer(
+        child: Column(
           children: [
             selectedList.length > 0
                 ? Container(
@@ -155,20 +159,12 @@ class _ClassworksListState extends State<ClassworksList> {
                                             builder: (_) => WorkDetails(
                                                 widget.list[index])));
                           },
-                          title: Text(
-                            widget.list[index].title,
-                            style: smallTitleStyle,
-                          ),
-                          subtitle: widget.user.type != Type.Teacher
-                              ? Text(
-                                  'Mr. ${widget.list[index].teacher.name}',
-                                  style: backgroundTextStyle,
-                                )
-                              : Text(
-                                  '${widget.list[index].date.toLocal()}'
-                                      .split(' ')[0],
-                                  style: backgroundTextStyle,
-                                ),
+                          title: SmallText(text: widget.list[index].title),
+                          subtitle: TextBackground(
+                              text: widget.user.type != Type.Teacher
+                                  ? 'Mr. ${widget.list[index].teacher.name}'
+                                  : '${widget.list[index].date.toLocal()}'
+                                      .split(' ')[0]),
                           trailing: Icon(
                             widget.list[index].isRead
                                 ? Icons.done
@@ -184,10 +180,13 @@ class _ClassworksListState extends State<ClassworksList> {
                   }),
             ),
             widget.user.type == Type.Teacher
-                ? buttonWithIcon(context, () {
-                    Navigator.of(context)
-                        .push(MaterialPageRoute(builder: (_) => AddExam()));
-                  }, 'ADD ${widget.title}', false)
+                ? ButtonWithIcon(
+                    onPress: () {
+                      Navigator.of(context)
+                          .push(MaterialPageRoute(builder: (_) => AddExam()));
+                    },
+                    title: 'ADD ${widget.title}',
+                    icon: false)
                 : Container()
           ],
         ),

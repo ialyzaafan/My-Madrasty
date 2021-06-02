@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:madrasty/helpers/ensure_visible.dart';
 import 'package:madrasty/style/style.dart';
 import 'package:madrasty/views/exam/buildExam.dart';
-import 'package:madrasty/views/general/General.dart';
+import 'package:madrasty/views/notifications/notficationMethods.dart';
+import 'package:madrasty/views/general/widgets/parentContainer.dart';
+import 'package:madrasty/views/general/widgets/roundedCard.dart';
+import 'package:madrasty/views/general/widgets/maintextfield.dart';
 
 class AddExam extends StatefulWidget {
   @override
@@ -17,9 +20,7 @@ class _AddExamState extends State<AddExam> {
     'total_marks': null,
     'sections': null
   };
-  final _subject = FocusNode();
-  final _examType = FocusNode();
-  final _marks = FocusNode();
+
   List sections = [];
   @override
   Widget build(BuildContext context) {
@@ -41,7 +42,8 @@ class _AddExamState extends State<AddExam> {
         },
         child: Form(
           key: _formKey,
-          child: containerPadding(ListView(
+          child: ParentContainer(
+              child: ListView(
             children: [
               Text(
                 'Subject',
@@ -51,42 +53,41 @@ class _AddExamState extends State<AddExam> {
                 height: 5,
               ),
               EnsureVisibleWhenFocused(
-                focusNode: _subject,
-                child: roundedCard(
-                    DropdownButton(
-                      focusNode: _subject,
-                      underline: Container(),
-                      iconSize: 30,
-                      icon: Icon(Icons.arrow_drop_down),
-                      hint: Text(
-                        'Arabic',
-                        style: paragraphStyle,
-                      ),
-                      onChanged: (value) {
-                        setState(() {
-                          _addFormData['subject'] = value;
-                        });
-                      },
-                      items: [
-                        DropdownMenuItem(
-                          child: Text(
-                            "Religion",
-                            style: paragraphStyle,
-                          ),
-                          value: 'Religion',
-                        ),
-                        DropdownMenuItem(
-                          child: Text(
-                            "Arabic",
-                            style: paragraphStyle,
-                          ),
-                          value: 'Arabic',
-                        ),
-                      ],
-                      value: _addFormData['subject'],
+                focusNode: FocusNode(),
+                child: RoundedCard(
+                  color: Colors.white,
+                  child: DropdownButton(
+                    underline: Container(),
+                    iconSize: 30,
+                    icon: Icon(Icons.arrow_drop_down),
+                    hint: Text(
+                      'Arabic',
+                      style: paragraphStyle,
                     ),
-                    Colors.white,
-                    0.0),
+                    onChanged: (value) {
+                      setState(() {
+                        _addFormData['subject'] = value;
+                      });
+                    },
+                    items: [
+                      DropdownMenuItem(
+                        child: Text(
+                          "Religion",
+                          style: paragraphStyle,
+                        ),
+                        value: 'Religion',
+                      ),
+                      DropdownMenuItem(
+                        child: Text(
+                          "Arabic",
+                          style: paragraphStyle,
+                        ),
+                        value: 'Arabic',
+                      ),
+                    ],
+                    value: _addFormData['subject'],
+                  ),
+                ),
               ),
               Text(
                 'Type',
@@ -96,54 +97,51 @@ class _AddExamState extends State<AddExam> {
                 height: 5,
               ),
               EnsureVisibleWhenFocused(
-                focusNode: _examType,
-                child: roundedCard(
-                    DropdownButton(
-                      focusNode: _examType,
-                      underline: Container(),
-                      iconSize: 30,
-                      icon: Icon(Icons.arrow_drop_down),
-                      hint: Text(
-                        'Monthly Exam',
-                        style: paragraphStyle,
-                      ),
-                      onChanged: (value) {
-                        setState(() {
-                          _addFormData['type'] = value;
-                        });
-                      },
-                      items: [
-                        DropdownMenuItem(
-                          child: Text(
-                            "Quiz",
-                            style: paragraphStyle,
-                          ),
-                          value: 'Quiz',
-                        ),
-                        DropdownMenuItem(
-                          child: Text(
-                            "Monthly Exam",
-                            style: paragraphStyle,
-                          ),
-                          value: 'Monthly Exam',
-                        ),
-                      ],
-                      value: _addFormData['type'],
+                focusNode: FocusNode(),
+                child: RoundedCard(
+                  color: Colors.white,
+                  child: DropdownButton(
+                    underline: Container(),
+                    iconSize: 30,
+                    icon: Icon(Icons.arrow_drop_down),
+                    hint: Text(
+                      'Monthly Exam',
+                      style: paragraphStyle,
                     ),
-                    Colors.white,
-                    0.0),
+                    onChanged: (value) {
+                      setState(() {
+                        _addFormData['type'] = value;
+                      });
+                    },
+                    items: [
+                      DropdownMenuItem(
+                        child: Text(
+                          "Quiz",
+                          style: paragraphStyle,
+                        ),
+                        value: 'Quiz',
+                      ),
+                      DropdownMenuItem(
+                        child: Text(
+                          "Monthly Exam",
+                          style: paragraphStyle,
+                        ),
+                        value: 'Monthly Exam',
+                      ),
+                    ],
+                    value: _addFormData['type'],
+                  ),
+                ),
               ),
-              buildTextFormField(
-                  'Total Marks',
-                  context,
-                  _marks,
-                  '40/40',
-                  (String value) {},
-                  (String value) {},
-                  null,
-                  false,
-                  1,
-                  Colors.white),
+              BuildTextFormField(
+                  maxlin: 1,
+                  definer: 'Total Marks',
+                  hint: '40/40',
+                  validator: (String value) {},
+                  onsave: (String value) {},
+                  suffix: null,
+                  obscureText: false,
+                  color: Colors.white),
               SizedBox(
                 height: 5,
               ),

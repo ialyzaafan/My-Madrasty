@@ -3,7 +3,10 @@ import 'package:madrasty/models/user.dart';
 import 'package:madrasty/style/style.dart';
 import 'package:madrasty/views/auth/forgetPassword.dart';
 import 'package:madrasty/views/child/homeChild.dart';
-import 'package:madrasty/views/general/General.dart';
+import 'package:madrasty/views/notifications/notficationMethods.dart';
+import 'package:madrasty/views/general/widgets/buttonWithIcon.dart';
+import 'package:madrasty/views/general/widgets/parentContainer.dart';
+import 'package:madrasty/views/general/widgets/maintextfield.dart';
 import 'package:madrasty/views/parent/tabs/bottomTabs.dart';
 import 'package:madrasty/views/princple/homePrinciple.dart';
 import 'package:madrasty/views/teacher/teachertabs.dart';
@@ -64,8 +67,8 @@ class _LoginState extends State<Login> {
         onTap: () {
           FocusScope.of(context).requestFocus(FocusNode());
         },
-        child: containerPadding(
-          Form(
+        child: ParentContainer(
+          child: Form(
             key: _formKey,
             child: ListView(
               children: [
@@ -79,41 +82,36 @@ class _LoginState extends State<Login> {
                 SizedBox(
                   height: 20,
                 ),
-                buildTextFormField(
-                    'username', context, _userNameFocusNode, 'Hulk010330',
-                    (String value) {
-                  if (value.isEmpty) {
-                    return 'Username is Required';
-                  } else {
-                    return null;
-                  }
-                }, (String value) {
-                  _formData['username'] = value;
-                }, null, false, 1, Colors.white),
+                BuildTextFormField(
+                    definer: 'username',
+                    hint: 'Hulk010330',
+                    validator: (String value) {
+                      if (value.isEmpty) {
+                        return 'Username is Required';
+                      } else {
+                        return '';
+                      }
+                    },
+                    onsave: (String value) {
+                      _formData['username'] = value;
+                    },
+                    suffix: Icon(Icons.e_mobiledata),
+                    obscureText: false,
+                    maxlin: 1,
+                    color: Colors.white),
                 SizedBox(
                   height: 20,
                 ),
-                buildTextFormField(
-                    'Password', context, _passwordFocusNode, '*******', null,
-                    (String value) {
-                  _formData['password'] = value;
-                },
-                    Padding(
-                        padding: EdgeInsets.all(5),
-                        child: InkWell(
-                            onTap: _toggle,
-                            child: Icon(
-                                _obscureText ? Icons.lock : Icons.lock_open))),
-                    _obscureText,
-                    1,
-                    Colors.white),
                 SizedBox(
                   height: 40,
                 ),
-                buttonWithIcon(context, () {
-                  _submitForm();
-                }, 'SIGN IN', true),
-                FlatButton(
+                ButtonWithIcon(
+                    onPress: () {
+                      _submitForm();
+                    },
+                    title: 'SIGN IN',
+                    icon: true),
+                TextButton(
                     onPressed: () {
                       Navigator.of(context).push(
                           MaterialPageRoute(builder: (_) => ForgetPassword()));

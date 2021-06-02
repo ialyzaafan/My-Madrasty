@@ -10,7 +10,10 @@ import 'package:madrasty/views/attendence/attendenceVIew.dart';
 import 'package:madrasty/views/chatUI/homeChat.dart';
 import 'package:madrasty/views/child/classWorks.dart';
 import 'package:madrasty/views/classrooms/Schedule.dart';
-import 'package:madrasty/views/general/General.dart';
+import 'package:madrasty/views/general/widgets/smallText.dart';
+import 'package:madrasty/views/notifications/notficationMethods.dart';
+import 'package:madrasty/views/general/widgets/homeContainers.dart';
+import 'package:madrasty/views/general/widgets/parentContainer.dart';
 import 'package:madrasty/views/notifications/HomeNotfications.dart';
 import 'package:madrasty/views/parent/installment/installment.dart';
 import 'package:madrasty/views/profileUI/myAcc.dart';
@@ -130,7 +133,7 @@ class _MyChildState extends State<MyChild> {
                                   )
                                 : Container(),
                           ),
-                          Text(i.name, style: smallTitleStyle)
+                          SmallText(text: i.name)
                         ],
                       ),
                     ),
@@ -169,60 +172,72 @@ class _MyChildState extends State<MyChild> {
         elevation: 0,
       ),
       body: SingleChildScrollView(
-        child: containerPadding(
-          Wrap(
+        child: ParentContainer(
+          child: Wrap(
             spacing: 2.0,
             children: [
-              homeContainers('assets/icons/notf.png', 'Notifications',
-                  HomeNotfications(), context),
-              homeContainers(
-                  'assets/icons/classwork.png',
-                  'Classwork',
-                  ClassworksList(classworkslist, 'Classworks', widget.parent),
-                  context),
-              homeContainers(
-                  'assets/icons/homework.png',
-                  'Homework',
-                  ClassworksList(
-                      classworkslist
-                          .where((i) => i.type == SubjectType.Homwork)
-                          .toList(),
-                      'Homeworks',
-                      widget.parent),
-                  context),
-              homeContainers(
-                  'assets/icons/projects.png',
-                  'Projects',
-                  ClassworksList(
-                      classworkslist
-                          .where((i) => i.type == SubjectType.Projects)
-                          .toList(),
-                      'Projects',
-                      widget.parent),
-                  context),
-              homeContainers(
-                  'assets/icons/extraclasses.png',
-                  'Extraclasses',
-                  ClassworksList(
-                      classworkslist
-                          .where((i) => i.type == SubjectType.Extra)
-                          .toList(),
-                      'Extra Classes',
-                      widget.parent),
-                  context),
-              homeContainers('assets/icons/schedule.png', 'Schedule',
-                  TeacherCalender(calender1), context),
-              homeContainers(
-                  'assets/icons/exams.png',
-                  'Exams',
-                  ClassworksList(selectedChild.exams, 'Exams', widget.parent),
-                  context),
-              homeContainers('assets/icons/evulation.png', 'Evaluations',
-                  Container(), context),
-              homeContainers('assets/icons/attendence.png', 'Attendance',
-                  AttendView(selectedChild), context),
-              homeContainers('assets/icons/money.png', 'Installments',
-                  Installment(installments), context),
+              HomeContainers(
+                  img: 'assets/icons/notf.png',
+                  title: 'Notifications',
+                  child: HomeNotfications()),
+              HomeContainers(
+                img: 'assets/icons/classwork.png',
+                title: 'Classwork',
+                child:
+                    ClassworksList(classworkslist, 'Classworks', widget.parent),
+              ),
+              HomeContainers(
+                img: 'assets/icons/homework.png',
+                title: 'Homework',
+                child: ClassworksList(
+                    classworkslist
+                        .where((i) => i.type == SubjectType.Homwork)
+                        .toList(),
+                    'Homeworks',
+                    widget.parent),
+              ),
+              HomeContainers(
+                img: 'assets/icons/projects.png',
+                title: 'Projects',
+                child: ClassworksList(
+                    classworkslist
+                        .where((i) => i.type == SubjectType.Projects)
+                        .toList(),
+                    'Projects',
+                    widget.parent),
+              ),
+              HomeContainers(
+                img: 'assets/icons/extraclasses.png',
+                title: 'Extraclasses',
+                child: ClassworksList(
+                    classworkslist
+                        .where((i) => i.type == SubjectType.Extra)
+                        .toList(),
+                    'Extra Classes',
+                    widget.parent),
+              ),
+              HomeContainers(
+                  img: 'assets/icons/schedule.png',
+                  title: 'Schedule',
+                  child: TeacherCalender(calender1)),
+              HomeContainers(
+                img: 'assets/icons/exams.png',
+                title: 'Exams',
+                child:
+                    ClassworksList(selectedChild.exams, 'Exams', widget.parent),
+              ),
+              HomeContainers(
+                  img: 'assets/icons/evulation.png',
+                  title: 'Evaluations',
+                  child: Container()),
+              HomeContainers(
+                  img: 'assets/icons/attendence.png',
+                  title: 'Attendance',
+                  child: AttendView(selectedChild)),
+              HomeContainers(
+                  img: 'assets/icons/money.png',
+                  title: 'Installments',
+                  child: Installment(installments)),
             ],
           ),
         ),

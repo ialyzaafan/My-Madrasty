@@ -3,7 +3,11 @@ import 'package:madrasty/models/messages.dart';
 import 'package:madrasty/style/style.dart';
 import 'package:madrasty/views/chatUI/chat.dart';
 import 'package:madrasty/views/chatUI/newGroup.dart';
-import 'package:madrasty/views/general/General.dart';
+import 'package:madrasty/views/general/widgets/smallText.dart';
+import 'package:madrasty/views/general/widgets/textBackground.dart';
+import 'package:madrasty/views/notifications/notficationMethods.dart';
+import 'package:madrasty/views/general/widgets/parentContainer.dart';
+import 'package:madrasty/views/general/widgets/roundedCard.dart';
 
 class ChatsHome extends StatefulWidget {
   @override
@@ -24,10 +28,7 @@ class _ChatsHomeState extends State<ChatsHome> {
           SizedBox(
             height: 30.0,
           ),
-          Text(
-            'No Messages received',
-            style: smallTitleStyle,
-          ),
+          SmallText(text: 'No Messages received'),
           SizedBox(height: 20.0),
           Container(
             width: MediaQuery.of(context).size.width / 1.5,
@@ -73,127 +74,120 @@ class _ChatsHomeState extends State<ChatsHome> {
         ],
       ),
       body: chats.length != 0
-          ? containerPadding(
-              roundedCard(
-                  ListView.builder(
-                      itemCount: chats.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        final Message chat = chats[index];
-                        return Container(
-                          child: GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (_) => ChatScreen(
-                                            user: chat.sender,
-                                          )));
-                              setState(() {
-                                chat.isRead = true;
-                              });
-                            },
-                            child: Row(
-                              children: [
-                                Container(
-                                  child: CircleAvatar(
-                                      backgroundColor: secondryColor,
-                                      child: chat.sender.imgUrl != null
-                                          ? null
-                                          : Icon(
-                                              Icons.person,
-                                              color: mainColor,
-                                            ),
-                                      radius: 30.0,
-                                      backgroundImage:
-                                          chat.sender.imgUrl != null
-                                              ? AssetImage(chat.sender.imgUrl)
-                                              : null),
-                                  decoration: chat.isRead
-                                      ? BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          boxShadow: [
-                                              BoxShadow(
-                                                  color: Colors.grey
-                                                      .withOpacity(0.5),
-                                                  spreadRadius: 2,
-                                                  blurRadius: 5)
-                                            ])
-                                      : BoxDecoration(
-                                          border: Border.all(
-                                              width: 2, color: mainColor),
-                                          shape: BoxShape.circle,
-                                          boxShadow: [
-                                              BoxShadow(
-                                                  color: Colors.grey
-                                                      .withOpacity(0.5),
-                                                  spreadRadius: 2,
-                                                  blurRadius: 5)
-                                            ]),
-                                ),
-                                Container(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.60,
-                                  padding: EdgeInsets.all(10.0),
-                                  child: Column(
-                                    children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Container(
-                                            alignment: Alignment.topLeft,
-                                            child: Text(
-                                              'Student - Class 3A',
-                                              textAlign: TextAlign.start,
-                                              maxLines: 1,
-                                              softWrap: true,
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
+          ? ParentContainer(
+              child: RoundedCard(
+                color: Colors.white,
+                child: ListView.builder(
+                    itemCount: chats.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      final Message chat = chats[index];
+                      return Container(
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) => ChatScreen(
+                                          user: chat.sender,
+                                        )));
+                            setState(() {
+                              chat.isRead = true;
+                            });
+                          },
+                          child: Row(
+                            children: [
+                              Container(
+                                child: CircleAvatar(
+                                    backgroundColor: secondryColor,
+                                    child: chat.sender.imgUrl != null
+                                        ? null
+                                        : Icon(
+                                            Icons.person,
+                                            color: mainColor,
                                           ),
-                                          Text(
-                                            chat.time.day.toString() +
+                                    radius: 30.0,
+                                    backgroundImage: chat.sender.imgUrl != null
+                                        ? AssetImage(chat.sender.imgUrl)
+                                        : null),
+                                decoration: chat.isRead
+                                    ? BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        boxShadow: [
+                                            BoxShadow(
+                                                color: Colors.grey
+                                                    .withOpacity(0.5),
+                                                spreadRadius: 2,
+                                                blurRadius: 5)
+                                          ])
+                                    : BoxDecoration(
+                                        border: Border.all(
+                                            width: 2, color: mainColor),
+                                        shape: BoxShape.circle,
+                                        boxShadow: [
+                                            BoxShadow(
+                                                color: Colors.grey
+                                                    .withOpacity(0.5),
+                                                spreadRadius: 2,
+                                                blurRadius: 5)
+                                          ]),
+                              ),
+                              Container(
+                                width: MediaQuery.of(context).size.width * 0.60,
+                                padding: EdgeInsets.all(10.0),
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Container(
+                                          alignment: Alignment.topLeft,
+                                          child: Text(
+                                            'Student - Class 3A',
+                                            textAlign: TextAlign.start,
+                                            maxLines: 1,
+                                            softWrap: true,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
+                                        TextBackground(
+                                            text: chat.time.day.toString() +
                                                 ' , ' +
                                                 chat.time.minute.toString() +
                                                 ':' +
-                                                chat.time.second.toString(),
-                                            style: backgroundTextStyle,
-                                          )
-                                        ],
+                                                chat.time.second.toString())
+                                      ],
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        SmallText(text: chat.sender.name),
+                                      ],
+                                    ),
+                                    Container(
+                                      alignment: Alignment.topLeft,
+                                      padding: EdgeInsets.only(top: 5.0),
+                                      child: Text(
+                                        chat.text,
+                                        textAlign: TextAlign.start,
+                                        maxLines: 1,
+                                        softWrap: true,
+                                        overflow: TextOverflow.ellipsis,
                                       ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text(
-                                            chat.sender.name,
-                                            style: smallTitleStyle,
-                                          ),
-                                        ],
-                                      ),
-                                      Container(
-                                        alignment: Alignment.topLeft,
-                                        padding: EdgeInsets.only(top: 5.0),
-                                        child: Text(
-                                          chat.text,
-                                          textAlign: TextAlign.start,
-                                          maxLines: 1,
-                                          softWrap: true,
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                      ),
-                                      Divider(
-                                        thickness: 1,
-                                      )
-                                    ],
-                                  ),
-                                )
-                              ],
-                            ),
+                                    ),
+                                    Divider(
+                                      thickness: 1,
+                                    )
+                                  ],
+                                ),
+                              )
+                            ],
                           ),
-                        );
-                      }),
-                  Colors.white,
-                  0.0),
+                        ),
+                      );
+                    }),
+              ),
             )
           : _buildNoMessages(context),
     );

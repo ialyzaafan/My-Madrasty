@@ -3,7 +3,9 @@ import 'package:madrasty/models/messages.dart';
 import 'package:madrasty/models/user.dart';
 import 'package:madrasty/style/style.dart';
 import 'package:madrasty/views/chatUI/infoChat.dart';
-import 'package:madrasty/views/general/General.dart';
+import 'package:madrasty/views/general/widgets/smallRichText.dart';
+import 'package:madrasty/views/general/widgets/textBackground.dart';
+import 'package:madrasty/views/notifications/notficationMethods.dart';
 
 class ChatScreen extends StatefulWidget {
   final User user;
@@ -75,12 +77,10 @@ class _ChatScreenState extends State<ChatScreen> {
               ? Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Text(
-                      message.time.minute.toString() +
-                          ':' +
-                          message.time.second.toString(),
-                      style: backgroundTextStyle,
-                    ),
+                    TextBackground(
+                        text: message.time.minute.toString() +
+                            ':' +
+                            message.time.second.toString()),
                     SizedBox(
                       width: 5.0,
                     ),
@@ -147,12 +147,10 @@ class _ChatScreenState extends State<ChatScreen> {
                     SizedBox(
                       width: 5.0,
                     ),
-                    Text(
-                      message.time.minute.toString() +
-                          ':' +
-                          message.time.second.toString(),
-                      style: backgroundTextStyle,
-                    )
+                    TextBackground(
+                        text: message.time.minute.toString() +
+                            ':' +
+                            message.time.second.toString())
                   ],
                 )
               : Container(
@@ -183,16 +181,7 @@ class _ChatScreenState extends State<ChatScreen> {
         ],
         backgroundColor: backgroundColor,
         centerTitle: true,
-        title: RichText(
-            textAlign: TextAlign.center,
-            text: TextSpan(children: [
-              TextSpan(text: widget.user.name, style: smallTitleStyle),
-              TextSpan(text: '\n'),
-              TextSpan(
-                text: 'Group Message',
-                style: backgroundTextStyle,
-              )
-            ])),
+        title: SmallRichText(text1: widget.user.name, text2: 'Group Message'),
       ),
       body: Column(
         children: [

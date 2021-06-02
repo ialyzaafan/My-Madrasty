@@ -3,7 +3,10 @@ import 'package:madrasty/models/bus.dart';
 import 'package:madrasty/models/user.dart';
 import 'package:madrasty/style/style.dart';
 import 'package:madrasty/views/bus/busDetails.dart';
-import 'package:madrasty/views/general/General.dart';
+import 'package:madrasty/views/general/widgets/smallText.dart';
+import 'package:madrasty/views/general/widgets/textBackground.dart';
+import 'package:madrasty/views/notifications/notficationMethods.dart';
+import 'package:madrasty/views/general/widgets/buttonWithIcon.dart';
 
 class BusView extends StatelessWidget {
   final Bus bus;
@@ -47,16 +50,16 @@ class BusView extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(checkpoint, style: smallTitleStyle),
-            Text(time, style: backgroundTextStyle),
+            SmallText(text: checkpoint),
+            TextBackground(text: time),
             SizedBox(
               height: 30,
             ),
             SizedBox(
               height: 20,
             ),
-            Text(checkpoint1, style: smallTitleStyle),
-            Text(time1, style: backgroundTextStyle),
+            SmallText(text: checkpoint1),
+            TextBackground(text: time1),
           ],
         )
       ],
@@ -98,18 +101,12 @@ class BusView extends StatelessWidget {
                       ),
                       title: Row(
                         children: [
-                          Text(
-                            bus.id,
-                            style: smallTitleStyle,
-                          ),
+                          SmallText(text: bus.id),
                           SizedBox(
                             width: 10,
                             child: Divider(),
                           ),
-                          Text(
-                            bus.route.name,
-                            style: smallTitleStyle,
-                          ),
+                          SmallText(text: bus.route.name),
                           SizedBox(
                             width: 2,
                           ),
@@ -156,24 +153,16 @@ class BusView extends StatelessWidget {
                               child: ListTile(
                                 leading: Icon(Icons.drive_eta_rounded,
                                     color: mainColor),
-                                title: Text(
-                                  'Supervisor',
-                                  style: backgroundTextStyle,
-                                ),
-                                subtitle: Text(bus.supervisor.name,
-                                    style: smallTitleStyle),
+                                title: TextBackground(text: 'Supervisor'),
+                                subtitle: SmallText(text: bus.supervisor.name),
                               )),
                           Expanded(
                               flex: 1,
                               child: ListTile(
                                 leading: Icon(Icons.drive_eta_rounded,
                                     color: mainColor),
-                                title: Text(
-                                  'Driver',
-                                  style: backgroundTextStyle,
-                                ),
-                                subtitle: Text(bus.driver.name,
-                                    style: smallTitleStyle),
+                                title: TextBackground(text: 'Driver'),
+                                subtitle: SmallText(text: bus.driver.name),
                               )),
                         ],
                       ),
@@ -193,14 +182,13 @@ class BusView extends StatelessWidget {
                       Container(
                           constraints: BoxConstraints(
                               minWidth: MediaQuery.of(context).size.width),
-                          child: buttonWithIcon(
-                            context,
-                            () {
+                          child: ButtonWithIcon(
+                            onPress: () {
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (_) => BusDetails(bus1, zod)));
                             },
-                            'Track Bus',
-                            false,
+                            title: 'Track Bus',
+                            icon: false,
                           ))
                     ],
                   ),

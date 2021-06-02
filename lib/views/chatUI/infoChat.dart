@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:madrasty/models/user.dart';
 import 'package:madrasty/style/style.dart';
-import 'package:madrasty/views/general/General.dart';
+import 'package:madrasty/views/general/widgets/smallText.dart';
+import 'package:madrasty/views/general/widgets/textBackground.dart';
+import 'package:madrasty/views/notifications/notficationMethods.dart';
+import 'package:madrasty/views/general/widgets/buildAvatar.dart';
+import 'package:madrasty/views/general/widgets/parentContainer.dart';
 
 class InfoChat extends StatefulWidget {
   final String groupName;
@@ -100,13 +104,16 @@ class _InfoChatState extends State<InfoChat> {
         backgroundColor: backgroundColor,
       ),
       backgroundColor: backgroundColor,
-      body: containerPadding(
-        Center(
+      body: ParentContainer(
+        child: Center(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              buildAvatar('', 'Aly Hassan + 30 more',
-                  _groupName != null ? _groupName : 'Group Message', context),
+              BuildAvatar(
+                  img: '',
+                  title: 'Aly Hassan + 30 more',
+                  description:
+                      _groupName != null ? _groupName : 'Group Message'),
               SizedBox(
                 height: 10,
               ),
@@ -144,14 +151,8 @@ class _InfoChatState extends State<InfoChat> {
                             Icons.remove_circle_rounded,
                             color: mainColor,
                           ),
-                          subtitle: Text(
-                            'Class 3A',
-                            style: backgroundTextStyle,
-                          ),
-                          title: Text(
-                            availableUsers[index].name,
-                            style: smallTitleStyle,
-                          ),
+                          subtitle: TextBackground(text: 'Class 3A'),
+                          title: SmallText(text: availableUsers[index].name),
                           leading: CircleAvatar(
                             backgroundColor: secondryColor,
                             backgroundImage:

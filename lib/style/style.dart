@@ -14,6 +14,12 @@ const seconderyBtnColor = Color(0xff3E4F87);
 const greyPara = Color(0xff636363);
 const thirdColor = Color(0xff30BCAF);
 
+final border = OutlineInputBorder(
+    borderRadius: BorderRadius.all(Radius.circular(12.0)),
+    borderSide: BorderSide(
+      color: Colors.transparent,
+    ));
+
 const titleStyle = TextStyle(
     fontSize: 30,
     color: fontColor1,

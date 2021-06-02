@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:madrasty/style/style.dart';
 import 'dart:async';
 
+import 'package:madrasty/views/general/widgets/smallText.dart';
+
 class AutoClosePage extends StatefulWidget {
   final image;
   final title;
@@ -37,10 +39,7 @@ class _AutoClosePageState extends State<AutoClosePage> {
                 SizedBox(
                   height: 20,
                 ),
-                Text(
-                  widget.title,
-                  style: smallTitleStyle,
-                ),
+                SmallText(text: widget.title),
                 SizedBox(
                   height: 10,
                 ),

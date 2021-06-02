@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:madrasty/style/style.dart';
 import 'package:madrasty/views/general/userList.dart';
+import 'package:madrasty/views/general/widgets/buildListSimple.dart';
+import 'package:madrasty/views/general/widgets/parentContainer.dart';
 
-import 'General.dart';
+import '../notifications/notficationMethods.dart';
 
 class ListofParentWidgets extends StatelessWidget {
   final String title;
@@ -21,20 +23,20 @@ class ListofParentWidgets extends StatelessWidget {
           style: titleStyle,
         ),
       ),
-      body: containerPadding(
-        ListView.builder(
+      body: ParentContainer(
+        child: ListView.builder(
             itemCount: list.length,
             itemBuilder: (BuildContext context, int index) {
-              return buildLisTileSimple(
-                  context,
-                  list[index].title,
-                  UsersList(list[index].students, list[index].title, null),
-                  list[index].students.length != null ||
+              return BuildListSimple(
+                  title: list[index].title,
+                  route:
+                      UsersList(list[index].students, list[index].title, null),
+                  length: list[index].students.length != null ||
                           list[index].students.length != 0
                       ? list[index].students.length
                       : 0,
-                  list[index].imgUrl,
-                  title == 'Classes' || title == 'My Classes'
+                  imgUrl: list[index].imgUrl,
+                  title2: title == 'Classes' || title == 'My Classes'
                       ? 'Students'
                       : '');
             }),

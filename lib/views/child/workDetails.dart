@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:madrasty/models/subject.dart';
 import 'package:madrasty/style/style.dart';
-import 'package:madrasty/views/general/General.dart';
+import 'package:madrasty/views/general/widgets/smallText.dart';
+import 'package:madrasty/views/notifications/notficationMethods.dart';
+import 'package:madrasty/views/general/widgets/buttonWithIcon.dart';
+import 'package:madrasty/views/general/widgets/elevatedButtonSecond.dart';
+import 'package:madrasty/views/general/widgets/parentContainer.dart';
 
 class WorkDetails extends StatefulWidget {
   final selectedWork;
@@ -25,8 +29,8 @@ class _WorkDetailsState extends State<WorkDetails> {
       ),
       backgroundColor: backgroundColor,
       body: SingleChildScrollView(
-        child: containerPadding(
-          Column(
+        child: ParentContainer(
+          child: Column(
             children: [
               Card(
                 shape: RoundedRectangleBorder(
@@ -49,10 +53,7 @@ class _WorkDetailsState extends State<WorkDetails> {
                         ),
                         ListTile(
                           contentPadding: EdgeInsets.only(top: 20, bottom: 20),
-                          title: Text(
-                            widget.selectedWork.title,
-                            style: smallTitleStyle,
-                          ),
+                          title: SmallText(text: widget.selectedWork.title),
                           subtitle: Text(
                             'Mr.' + widget.selectedWork.teacher.name,
                             style: paragraphStyle,
@@ -89,11 +90,13 @@ class _WorkDetailsState extends State<WorkDetails> {
                         SizedBox(
                           height: 20,
                         ),
-                        buttonWithIcon(context, () {}, 'Upload File', false),
+                        ButtonWithIcon(
+                            onPress: () {}, title: 'Upload File', icon: false),
                         SizedBox(
                           height: 10,
                         ),
-                        seconderyBtn(context, () {}, 'Mark as adone'),
+                        ElevatedButtonSecond(
+                            onpress: () {}, title: 'Mark as adone'),
                         SizedBox(
                           height: 20,
                         ),

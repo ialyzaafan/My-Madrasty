@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:madrasty/models/user.dart';
 import 'package:madrasty/style/style.dart';
+import 'package:madrasty/views/general/widgets/smallText.dart';
+import 'package:madrasty/views/general/widgets/textBackground.dart';
 
 class NewGroup extends StatefulWidget {
   @override
@@ -23,7 +25,7 @@ class _NewGroupState extends State<NewGroup> {
           style: mainColorTitleTextStyle,
         ),
         actions: [
-          FlatButton(
+          TextButton(
               onPressed: () {},
               child: Text(
                 'OK',
@@ -120,14 +122,8 @@ class _NewGroupState extends State<NewGroup> {
                           print(val);
                         },
                         activeColor: mainColor,
-                        title: Text(
-                          availableUsers[index].name,
-                          style: smallTitleStyle,
-                        ),
-                        subtitle: Text(
-                          'Teacher',
-                          style: backgroundTextStyle,
-                        ),
+                        title: SmallText(text: availableUsers[index].name),
+                        subtitle: TextBackground(text: 'Teacher'),
                       ),
                     );
                   }),

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:madrasty/models/installmentClass.dart';
 import 'package:madrasty/style/style.dart';
-import 'package:madrasty/views/general/General.dart';
+import 'package:madrasty/views/general/widgets/smallText.dart';
+import 'package:madrasty/views/general/widgets/textBackground.dart';
+import 'package:madrasty/views/notifications/notficationMethods.dart';
+import 'package:madrasty/views/general/widgets/parentContainer.dart';
 
 class Installment extends StatelessWidget {
   final List<InstallmentClass> installmentsList;
@@ -53,8 +56,8 @@ class Installment extends StatelessWidget {
         elevation: 0,
         backgroundColor: backgroundColor,
       ),
-      body: containerPadding(
-        ListView.builder(
+      body: ParentContainer(
+        child: ListView.builder(
             itemCount: installmentsList.length,
             itemBuilder: (BuildContext context, int index) {
               return Card(
@@ -73,15 +76,10 @@ class Installment extends StatelessWidget {
                           fit: BoxFit.contain,
                         ),
                       ),
-                      title: Text(
-                        '${installmentsList[index].time.toLocal()}'
-                            .split(' ')[0],
-                        style: backgroundTextStyle,
-                      ),
-                      subtitle: Text(
-                        installmentsList[index].title,
-                        style: smallTitleStyle,
-                      ),
+                      title: TextBackground(
+                          text: '${installmentsList[index].time.toLocal()}'
+                              .split(' ')[0]),
+                      subtitle: SmallText(text: installmentsList[index].title),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(

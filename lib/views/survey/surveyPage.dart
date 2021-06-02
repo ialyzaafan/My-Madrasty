@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:madrasty/models/survey.dart';
 import 'package:madrasty/style/style.dart';
-import 'package:madrasty/views/general/General.dart';
+import 'package:madrasty/views/general/widgets/smallText.dart';
+import 'package:madrasty/views/notifications/notficationMethods.dart';
+import 'package:madrasty/views/general/widgets/parentContainer.dart';
 
 class Survey extends StatefulWidget {
   final SurveyClass survy;
@@ -34,8 +36,8 @@ class _SurveyState extends State<Survey> {
           color: mainColor, //change your color here
         ),
       ),
-      body: containerPadding(
-        Column(
+      body: ParentContainer(
+        child: Column(
           children: [
             StepProgressBar(
               key: UniqueKey(),
@@ -63,11 +65,9 @@ class _SurveyState extends State<Survey> {
                           ),
                           Padding(
                             padding: const EdgeInsets.only(top: 8),
-                            child: Text(
-                              '${widget.survy.questions[currentStep].question}',
-                              key: UniqueKey(),
-                              style: smallTitleStyle,
-                            ),
+                            child: SmallText(
+                                text:
+                                    '${widget.survy.questions[currentStep].question}'),
                           ),
                           SizedBox(
                             height: 30,

@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:madrasty/models/exam.dart';
 import 'package:madrasty/style/style.dart';
-import 'package:madrasty/views/general/General.dart';
 import 'package:madrasty/views/general/autoClosePage.dart';
+import 'package:madrasty/views/general/widgets/elevatedButtonSmallText.dart';
+import 'package:madrasty/views/general/widgets/parentContainer.dart';
+import 'package:madrasty/views/general/widgets/roundedCard.dart';
+import 'package:madrasty/views/general/widgets/smallRichText.dart';
+import 'package:madrasty/views/general/widgets/smallText.dart';
+import 'package:madrasty/views/general/widgets/whiteSmallText.dart';
 
 class ExamView extends StatefulWidget {
   final Exam exam;
@@ -20,27 +25,14 @@ class _ExamViewState extends State<ExamView> {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12.0),
       ),
-      title: Center(
-          child: const Text(
-        'Submit Exam',
-        style: smallTitleStyle,
-      )),
+      title: Center(child: SmallText(text: 'Submit Exam')),
       content: new Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          RichText(
-              textAlign: TextAlign.start,
-              text: TextSpan(children: [
-                TextSpan(
-                    text: 'Are you sure that you want to submit this exam?',
-                    style: backgroundTextStyle),
-                TextSpan(text: '\n'),
-                TextSpan(
-                  text: 'Note that: this action is not reversable',
-                  style: backgroundTextStyle,
-                )
-              ])),
+          SmallRichText(
+              text1: 'Are you sure that you want to submit this exam?',
+              text2: 'Note that: this action is not reversable'),
         ],
       ),
       actions: <Widget>[
@@ -56,16 +48,8 @@ class _ExamViewState extends State<ExamView> {
             onPressed: () {
               Navigator.pop(context);
             }),
-        RaisedButton(
-            elevation: 0,
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-            color: mainColor,
-            child: Text(
-              'Submit',
-              style: whiteSmallTitleStyle,
-            ),
-            onPressed: () {
+        ElevatedButtonSmallText(
+            func: () {
               Navigator.pop(context);
 
               Navigator.pushReplacement(
@@ -75,7 +59,8 @@ class _ExamViewState extends State<ExamView> {
                           'assets/illustrations/emaxSubmited.png',
                           'Exam Submited',
                           'Your exam answers have been submitted. Your teacher will review your answers and correct the exam soon.')));
-            }),
+            },
+            text: 'Submit'),
       ],
     );
   }
@@ -184,116 +169,83 @@ class _ExamViewState extends State<ExamView> {
         onTap: () {
           FocusScope.of(context).requestFocus(FocusNode());
         },
-        child: containerPadding(
-          ListView(children: [
+        child: ParentContainer(
+          child: ListView(children: [
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-              RichText(
-                  textAlign: TextAlign.start,
-                  text: TextSpan(children: [
-                    TextSpan(
-                        text: '${arabicExam.title}', style: smallTitleStyle),
-                    TextSpan(text: '\n'),
-                    TextSpan(
-                      text: arabicExam.examType,
-                      style: backgroundTextStyle,
-                    )
-                  ])),
-              RichText(
-                  textAlign: TextAlign.start,
-                  text: TextSpan(children: [
-                    TextSpan(
-                        text:
-                            '${arabicExam.sections.expand((e) => e.questions).toList().length} Questions',
-                        style: backgroundTextStyle),
-                    TextSpan(text: '\n'),
-                    TextSpan(
-                      text:
-                          '${arabicExam.sections.expand((e) => e.questions).toList().fold(0, (sum, item) => sum + item.mark)} Marks',
-                      style: backgroundTextStyle,
-                    )
-                  ])),
+              SmallRichText(
+                  text1: '${arabicExam.title}', text2: arabicExam.examType),
+              SmallRichText(
+                  text1:
+                      '${arabicExam.sections.expand((e) => e.questions).toList().length} Questions',
+                  text2:
+                      '${arabicExam.sections.expand((e) => e.questions).toList().fold(0, (sum, item) => sum + item.mark)} Marks'),
             ]),
             SizedBox(
               height: 20,
             ),
-            roundedCard(
-                ListView.builder(
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  itemCount: widget.exam.sections.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Section ${index + 1}',
-                          style: smallTitleStyle,
-                        ),
-                        Text(
-                          widget.exam.sections[index].type == SectionType.Choose
-                              ? 'Choose Questions Type'
+            RoundedCard(
+              color: Colors.white,
+              child: ListView.builder(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                itemCount: widget.exam.sections.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SmallText(text: 'Section ${index + 1}'),
+                      Text(
+                        widget.exam.sections[index].type == SectionType.Choose
+                            ? 'Choose Questions Type'
+                            : widget.exam.sections[index].type ==
+                                    SectionType.Complpete
+                                ? 'Fill in the blanks'
+                                : 'Write an Essay',
+                        style: paragraphStyle,
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      ListView.builder(
+                        physics: NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: widget.exam.sections[index].questions.length,
+                        itemBuilder: (BuildContext context, int index7) {
+                          return widget.exam.sections[index].type ==
+                                  SectionType.Choose
+                              ? buildChoose(
+                                  widget.exam.sections[index].questions, index7)
                               : widget.exam.sections[index].type ==
                                       SectionType.Complpete
-                                  ? 'Fill in the blanks'
-                                  : 'Write an Essay',
-                          style: paragraphStyle,
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        ListView.builder(
-                          physics: NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount:
-                              widget.exam.sections[index].questions.length,
-                          itemBuilder: (BuildContext context, int index7) {
-                            return widget.exam.sections[index].type ==
-                                    SectionType.Choose
-                                ? buildChoose(
-                                    widget.exam.sections[index].questions,
-                                    index7)
-                                : widget.exam.sections[index].type ==
-                                        SectionType.Complpete
-                                    ? buildComplete(
-                                        widget.exam.sections[index].questions,
-                                        index7,
-                                        1)
-                                    : buildComplete(
-                                        widget.exam.sections[index].questions,
-                                        index7,
-                                        8);
-                          },
-                        )
-                      ],
-                    );
-                  },
-                ),
-                Colors.white,
-                0.0),
+                                  ? buildComplete(
+                                      widget.exam.sections[index].questions,
+                                      index7,
+                                      1)
+                                  : buildComplete(
+                                      widget.exam.sections[index].questions,
+                                      index7,
+                                      8);
+                        },
+                      )
+                    ],
+                  );
+                },
+              ),
+            ),
             SizedBox(
               height: 10,
             ),
             Container(
                 constraints: BoxConstraints(
                     minWidth: MediaQuery.of(context).size.width - 30),
-                child: RaisedButton(
-                    color: mainColor,
-                    onPressed: () {
+                child: ElevatedButtonSmallText(
+                    func: () {
                       showDialog(
                           context: context,
                           builder: (BuildContext context) =>
                               _buildSubmitDialog(context));
                     },
-                    child: Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Text(
-                        'Submit',
-                        style: whiteSmallTitleStyle,
-                      ),
-                    ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    )))
+                    text: 'Submit'))
           ]),
         ),
       ),

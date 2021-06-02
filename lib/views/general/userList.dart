@@ -6,9 +6,12 @@ import 'package:madrasty/models/user.dart';
 import 'package:madrasty/style/style.dart';
 import 'package:madrasty/views/exam/reviewExam.dart';
 import 'package:madrasty/views/exam/scroll.dart';
+import 'package:madrasty/views/general/widgets/buttonWithIcon.dart';
+import 'package:madrasty/views/general/widgets/listSimple2.dart';
+import 'package:madrasty/views/general/widgets/parentContainer.dart';
 import 'package:madrasty/views/profileUI/myAcc.dart';
 
-import 'General.dart';
+import '../notifications/notficationMethods.dart';
 
 class UsersList extends StatefulWidget {
   final List users;
@@ -53,31 +56,33 @@ class _UsersListState extends State<UsersList> {
         iconTheme: IconThemeData(color: mainColor),
       ),
       backgroundColor: backgroundColor,
-      body: containerPadding(
-        Column(
+      body: ParentContainer(
+        child: Column(
           children: [
             Expanded(
               child: ListView.builder(
                   itemCount: widget.users.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return buildLisTileSimple2(
-                        context,
-                        widget.users[index].attendances,
-                        widget.users[index].name,
-                        widget.users[index].imgUrl,
-                        widget.pageId == 1
+                    return ListSimple2(
+                        attendances: widget.users[index].attendances,
+                        title: widget.users[index].name,
+                        imgUrl: widget.users[index].imgUrl,
+                        route: widget.pageId == 1
                             ? ReviewExam(arabicExam, widget.users[index], zod)
                             : MyProfile(widget.users[index]));
                   }),
             ),
             widget.pageId == 1
-                ? buttonWithIcon(context, () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (_) => SamplePage([
-                              {'User': spiderMan, 'Exam': arabicExam},
-                              {'User': superMan, 'Exam': arabicExam},
-                            ])));
-                  }, 'REVIEW ALL', false)
+                ? ButtonWithIcon(
+                    onPress: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (_) => SamplePage([
+                                {'User': spiderMan, 'Exam': arabicExam},
+                                {'User': superMan, 'Exam': arabicExam},
+                              ])));
+                    },
+                    title: 'REVIEW ALL',
+                    icon: false)
                 : Container()
           ],
         ),
